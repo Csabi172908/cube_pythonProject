@@ -786,6 +786,7 @@ def yellow(c):
   for i in range(len(yellow[2])):
     if yellow[2][i]==2:
       return True
+
 def first_cross(c):
     l1 = c.cube_method_get_cubie_pos_name_color()
     fr = []
@@ -827,6 +828,20 @@ def check_first_row(check_cube,cube):
         return check
     else:
         return check
+
+def cubie_checking(c, list):
+    l = c.cube_method_get_cubie_pos_name_color()
+    false = []
+    true = []
+    for i in range(len(list)):
+        for j in range(len(l)):
+            if (l[j][0]==list[i][0])==True:
+                if all(l[j][2] == list[i][1]) == True:
+                    true.append(l[j])
+                else:
+                    false.append(l[j])
+    return false
+
 
 def white_cross_first(c, x=-1, y=3, z=4):
     first = cube_method_findcolour(c, x, y, z)
@@ -1223,7 +1238,7 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
             c.L()
             c.L()
 
-    if cube_method_good_orient(fourth[2], x, y, z) == True:
+    if cube_method_good_orient(fourth[2], x, y, z):
 
         return True
       
