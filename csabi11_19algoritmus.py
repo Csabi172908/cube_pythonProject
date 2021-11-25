@@ -803,7 +803,11 @@ def check_first_row(d,c):
         if all(check_fr[i][2]==fr[i][2])==False:
             check=False
             break
-    if check==
+    
+    if check:
+        return check
+    else:
+        return check
 
 def white_cross_first(c, x=-1, y=3, z=4):
     first = cube_method_findcolour(c, x, y, z)
