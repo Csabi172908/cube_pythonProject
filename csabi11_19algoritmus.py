@@ -786,7 +786,16 @@ def yellow(c):
   for i in range(len(yellow[2])):
     if yellow[2][i]==2:
       return True
-
+def first_cross(c):
+    l1 = c.cube_method_get_cubie_pos_name_color()
+    fr = []
+    for i in range(len(l1)):
+        if l1[i][0][1] == 0 and l1[i][0][0]==1:
+            fr.append(l1[i])
+    for i in range(len(l1)):
+        if l1[i][0][1] == 0 and l1[i][0][2]==1:
+            fr.append(l1[i])
+    return fr
 def first_row(c):
     l1 = c.cube_method_get_cubie_pos_name_color()
     fr=[]
@@ -794,7 +803,18 @@ def first_row(c):
         if l1[i][0][1]==0:
             fr.append(l1[i])
     return fr
-
+def check_first_cross(check_cube,cube):
+    fr = first_cross(cube)
+    check_fr = first_cross(check_cube)
+    check = True
+    for i in range(len(fr)):
+        if all(check_fr[i][2] == fr[i][2]) == False:
+            check = False
+            break
+    if check:
+        return check
+    else:
+        return check
 def check_first_row(check_cube,cube):
     fr=first_row(cube)
     check_fr=first_row(check_cube)
@@ -804,7 +824,7 @@ def check_first_row(check_cube,cube):
             check=False
             break
     if check:
-        return (check, fr)
+        return check
     else:
         return check
 
@@ -906,7 +926,7 @@ def white_cross_first(c, x=-1, y=3, z=4):
         return True
 
 def white_cross_second(c, x=1, y=3, z=-1):
-    second = cube_method_findcolour(c,x,y,z)
+    second = cube_method_findcolour(c, x, y, z)
     if second[0][2] == 0:
             
         if second[0][1] == 0:
@@ -1072,11 +1092,7 @@ def white_cross_third(c, x=-1, y=3, z=6):
 
         if third[0][1] == 0:
 
-            # c.cube_method_mixer("bllF")
-            c.B_r()
-            c.L_r()
-            c.L_r()
-            c.F()
+            pass
 
         if third[0][1] == 1:
 
@@ -1117,7 +1133,6 @@ def white_cross_third(c, x=-1, y=3, z=6):
         c.D_r()
         c.F()
         c.F()
-
 
         return True
 
@@ -1227,7 +1242,6 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
 
 def cube_method_firstcorner(c, x=1, y=3, z=6):
     first = cube_method_findcolour(c, x, y, z)
-    print(first)
     if first[0][2] == 2:
 
         if first[0][1] == 0:
@@ -1323,7 +1337,6 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
     if cube_method_findcolour(c, x, y, z)[0] == [2, 0, 0]:
 
         while cube_method_good_orient(first[2], x, y, z)==False:
-                print(first[2])
                 # c.cube_method_mixer("rDRDDFDf")
                 c.R_r()
                 c.D()
@@ -1333,11 +1346,8 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.F()
                 c.D()
                 c.F_r()
-                print(first[2])
         return True
 
-    else:
-        print(first)
 
 
 def cube_method_secondcorner(c, x=5, y=3, z=6):
@@ -1510,7 +1520,6 @@ def cube_method_thirdcorner(c, x=5, y=3, z=4):
     if cube_method_findcolour(c, x, y, z)[0] == [0, 0, 2]:
 
         while cube_method_good_orient(third[2], x, y, z) != True:
-            print(third)
             # c.cube_method_mixer("bDBdbDB")
             c.B_r()
             c.D()
