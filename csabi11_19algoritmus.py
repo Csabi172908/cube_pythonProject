@@ -791,21 +791,20 @@ def first_row(c):
     l1 = c.cube_method_get_cubie_pos_name_color()
     fr=[]
     for i in range(len(l1)):
-        if l1[i][0][2]==0:
+        if l1[i][0][1]==0:
             fr.append(l1[i])
     return fr
 
-def check_first_row(d,c):
-    fr=first_row(c)
-    check_fr=first_row(d)
+def check_first_row(check_cube,cube):
+    fr=first_row(cube)
+    check_fr=first_row(check_cube)
     check=True
     for i in range(len(fr)):
-        if all(check_fr[i][2]==fr[i][2])==False:
+        if all(check_fr[i][2]==fr[i][2]) == False:
             check=False
             break
-    
     if check:
-        return check
+        return (check, fr)
     else:
         return check
 
