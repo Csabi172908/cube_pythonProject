@@ -1660,6 +1660,9 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
     c.cube_method_flipper("x")
     c.cube_method_flipper("x")
     c.cube_method_flipper("y")
+    c.cube_method_flipper("y")
+    #print(cubie_checking(c, [([1,1,0], np.array([-1,-1,5]))]))
+    #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1,  6]))]))
     #adjust_color_middle_to_face(c, "Y", "U", "G", "F")
 
     first=cube_method_findcolour(c,x,y,z)
@@ -1667,9 +1670,11 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
     if first[0][1]==1:
   
         if first[0][2]==0:
-
+            print("front")
+            #c.cube_method_3d_drawer()
             if first[0][0]==0:
-
+                print("left")
+                #c.cube_method_3d_drawer()
                 c.U_r()
                 c.L_r()
                 c.U()
@@ -1679,8 +1684,9 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.U_r()
                 c.F_r()
 
-            if first[0][0]==2:
-
+            elif first[0][0]==2:
+                print("right")
+                #c.cube_method_3d_drawer("URurufUF")
                 c.U()
                 c.R()
                 c.U_r()
@@ -1690,13 +1696,15 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.U()
                 c.F()
 
-        if first[0][2]==2:
-
+        elif first[0][2]==2:
+            print("back")
+            #c.cube_method_3d_drawer()
             c.cube_method_flipper("y")
             c.cube_method_flipper("y")
 
             if first[0][0]==0:
-
+                print("left")
+                #c.cube_method_3d_drawer()
                 c.U_r()
                 c.L_r()
                 c.U()
@@ -1705,9 +1713,11 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.F()
                 c.U_r()
                 c.F_r()
+                # c.cube_method_3d_drawer()
 
-            if first[0][0]==2:
-
+            elif first[0][0]==2:
+                print("right")
+                #c.cube_method_3d_drawer()
                 c.U()
                 c.R()
                 c.U_r()
@@ -1716,19 +1726,19 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.F_r()
                 c.U()
                 c.F()
-
+                # c.cube_method_3d_drawer()
             c.cube_method_flipper("y")
             c.cube_method_flipper("y")
-      
+    #c.cube_method_3d_drawer()
     if first[0][1]==0:
-
+        #c.cube_method_3d_drawer()
         if first[0][0]==0:
 
               c.U_r()
 
         if first[0][0]==1:
 
-            if first[0][2]==1:
+            if first[0][2]==0:
 
                 pass
               
