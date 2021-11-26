@@ -745,6 +745,99 @@ class Cube:
 
         return did_it_turn
 
+def adjust_color_middle_to_face(c, middlecolor, side_to_flip_to, middlesidecolor, middle_side_to_flip_to):
+    '''
+    input: middle cubie szín, hova akarjuk, middle cubie szín, hova akarjuk
+    '''
+
+    #c.cube_method_did_cubie_move(facekar)
+    list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
+    # ebben keresem a közepeket, (ezek amiknek a col ban 2 db -1 és egy col van)
+    # ha megvannak elmentem dictben, a colorral együtt
+    # ezután forgatom az egész kockát flippel amíg a lekért listában
+    # a pos nem az ahova akarom forgatni a kockát
+    dict_of_num_color={1: "R", 2:"Y",3:"W", 4:"B", 5:"O", 6:"G"}
+    dict_of_color_num={"R":1, "Y":2,"W":3, "B":4, "O":5, "G":6}
+    dict_of_middles={}
+    for tup in list_of_cubie_pos_name_color:
+        if list(tup[2]).count(-1)==2:
+            # print(tup)
+            for color in tup[2]:
+                if color!=-1:
+                    dict_of_middles[dict_of_num_color[color]]=tup[0]
+    #print(dict_of_middles) # dictben van a color és a position
+    dict_of_middle_sides={'L': [0, 1, 1], 'U': [1, 0, 1], 'F': [1, 1, 0], 'B': [1, 1, 2], 'D': [1, 2, 1], 'R': [2, 1, 1]}
+    steps=["x","y","y","y","y","x","y","y","y","y","x","y","y","y","y","x","y","y","y","y","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x"]
+    stepper=0
+    while dict_of_middles[middlecolor]!=dict_of_middle_sides[side_to_flip_to] or dict_of_middles[middlesidecolor]!=dict_of_middle_sides[middle_side_to_flip_to]:
+        c.cube_method_flipper(steps[stepper])
+        list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
+        dict_of_middles={}
+        for tup in list_of_cubie_pos_name_color:
+            if list(tup[2]).count(-1)==2:
+                # print(tup)
+                for color in tup[2]:
+                    if color!=-1:
+                        dict_of_middles[dict_of_num_color[color]]=tup[0]
+
+        print("stepper: ", stepper)
+        print((dict_of_middles))
+        print("sides: ")
+        print(dict_of_middle_sides)
+        stepper+=1
+        if stepper>=len(steps):
+            print("NOOOO")
+            break
+
+    if dict_of_middles[middlecolor]==dict_of_middle_sides[side_to_flip_to] and dict_of_middles[middlesidecolor]==dict_of_middle_sides[middle_side_to_flip_to]:
+        pass
+        # print("TRUE")
+    else:
+        pass
+        # print("NOT TRUE")
+    # minden
+    # dictben kell addig újrahívni ezt amíg mondjuk red az U nem lesz
+    # ez még lehet cube tulajdonságnak tenni
+
+def side_koords(c):
+    list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
+    for tup in list_of_cubie_pos_name_color:
+        if list(tup[2]).count(-1)==1:
+            # print(tup)
+            str_name=""
+            for color in tup[2]:
+                if color!=-1:
+                    str_name+=dict_of_num_color[color]
+            dict_of_sides_col_pos[str_name]=tup[0]
+
+def dict_of_sides_positions_one_color(c,color):
+    '''returnöl egy dictet amiben az adott color side-jai vannak színnel kódolva'''
+    list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
+    dict_of_num_color={1: "R", 2:"Y",3:"W", 4:"B", 5:"O", 6:"G"}
+    dict_of_sides_col_pos={}
+    for tup in list_of_cubie_pos_name_color:
+        if list(tup[2]).count(-1)==1:
+            # print(tup)
+            str_name=""
+            for color in tup[2]:
+
+                if color!=-1:
+                    str_name+=dict_of_num_color[color]
+            dict_of_sides_col_pos[str_name]=tup[0]
+    #print("LOOOOOL: ",dict_of_sides_col_pos) # dictben van a color és a position
+    return dict_of_sides_col_pos
+
+def pos_of_side_with_two_color(c,col1,col2):
+    '''dict of side pos 2colorral'''
+    dict_of_sides_col_pos=dict_of_sides_positions_one_color(c,col1)
+    if col1+col2 in dict_of_sides_col_pos.keys():
+        side_pos_dict_name=col1+col2
+        #print(dict_of_sides_col_pos[col1+col2])
+    if col2+col1 in dict_of_sides_col_pos.keys():
+        side_pos_dict_name=col2+col1
+        #print(dict_of_sides_col_pos[col2+col1])
+    return (side_pos_dict_name,dict_of_sides_col_pos[side_pos_dict_name])
+
 
 def cube_method_findcolour(c, x=-1, y=-1, z=-1):
   l = c.cube_method_get_cubie_pos_name_color()
@@ -1218,10 +1311,10 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.L()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
             if first[0][0] == 2:
 
@@ -1232,10 +1325,10 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D_r()
                 c.D_r()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
         if first[0][1] == 2:
 
@@ -1245,19 +1338,19 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.D()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
             if first[0][0] == 2:
               
                 c.D_r()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
     if first[0][2] == 0:
           
@@ -1270,10 +1363,10 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.L_r()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
             if first[0][0] == 2:
 
@@ -1285,10 +1378,10 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 
                 c.D()
                 # c.cube_method_mixer("DrdR")
-                c.D_r()
-                c.R_r()
-                c.D()
-                c.R()
+                #c.D_r()
+                #c.R_r()
+                #c.D()
+                #c.R()
 
             if first[0][0] == 2:
 
@@ -1298,19 +1391,16 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.R()
 
-    if cube_method_findcolour(c, x, y, z)[0] == [2, 0, 0]:
-
-        while cube_method_good_orient(first[2], x, y, z)==False:
-                # c.cube_method_mixer("rDRDDFDf")
-                c.R_r()
-                c.D_r()
-                c.R()
-                c.D()
-                c.D()
-                c.F()
-                c.D_r()
-                c.F_r()
-        return True
+    #if cube_method_findcolour(c, x, y, z)[0] == [2, 0, 0]:
+    first = cube_method_findcolour(c, x, y, z)
+    while cube_method_good_orient(first[2], x, y, z)==False:
+        # c.cube_method_mixer("rDRDDFDf")
+        c.R_r()
+        c.D_r()
+        c.R()
+        c.D()
+        first = cube_method_findcolour(c, x, y, z)
+    return True
 
 
 
@@ -1326,10 +1416,10 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.B()
                 c.D()
                 c.B_r()
-                c.D()
-                c.L()
-                c.D_r()
-                c.L_r()
+                #c.D()
+                #c.L()
+                #c.D_r()
+                #c.L_r()
 
             if second[0][0] == 2:
 
@@ -1338,20 +1428,20 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.D()
                 c.D()
                 c.B()
-                c.D()
-                c.L()
-                c.D_r()
-                c.L_r()
+                #c.D()
+                #c.L()
+                #c.D_r()
+                #c.L_r()
 
         if second[0][1] == 2:
 
             if second[0][0] == 0:
 
                 c.D()
-                c.D()
-                c.L()
-                c.D_r()
-                c.L_r()
+                #c.D()
+                #c.L()
+                #c.D_r()
+                #c.L_r()
 
             if second[0][0] == 2:
 
@@ -1395,20 +1485,16 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.D_r()
                 c.L_r()
 
-    if cube_method_findcolour(c, x, y, z)[0] == [0, 0, 0]:
+    second = cube_method_findcolour(c, x, y, z)
+    while cube_method_good_orient(second[2], x, y, z) != True:
+        # c.cube_method_mixer("lDLdlDL")
+        c.L()
+        c.D()
+        c.L_r()
+        c.D_r()
+        second = cube_method_findcolour(c, x, y, z)
 
-        while cube_method_good_orient(second[2], x, y, z) != True:
-
-            # c.cube_method_mixer("lDLdlDL")
-            c.L()
-            c.D_r()
-            c.L_r()
-            c.D()
-            c.L()
-            c.D_r()
-            c.L_r()
-
-        return True
+    return True
 
 def cube_method_thirdcorner(c, x=5, y=3, z=4):
     third = cube_method_findcolour(c, x, y, z)
@@ -1481,22 +1567,21 @@ def cube_method_thirdcorner(c, x=5, y=3, z=4):
                 c.D_r()
                 c.B_r()
 
-    if cube_method_findcolour(c, x, y, z)[0] == [0, 0, 2]:
+    third = cube_method_findcolour(c, x, y, z)
 
-        while cube_method_good_orient(third[2], x, y, z) != True:
-            # c.cube_method_mixer("bDBdbDB")
-            c.B()
-            c.D_r()
-            c.B_r()
-            c.D()
-            c.B()
-            c.D_r()
-            c.B_r()
+    while cube_method_good_orient(third[2], x, y, z) != True:
+        # c.cube_method_mixer("bDBdbDB")
+        c.B()
+        c.D()
+        c.B_r()
+        c.D_r()
 
-        return True
+        third = cube_method_findcolour(c, x, y, z)
+
+    return True
 
 def cube_method_fourthcorner(c, x=1, y=3, z=4):
-    fourth=cube_method_findcolour(c,x,y,z)
+    fourth = cube_method_findcolour(c,x,y,z)
     if fourth[0][2] == 0:
           
         if fourth[0][1] == 0:
@@ -1558,24 +1643,23 @@ def cube_method_fourthcorner(c, x=1, y=3, z=4):
                 c.D_r()
                 c.R_r()
 
-    if cube_method_findcolour(c, x, y, z)[0] == [2, 0, 2]:
+    fourth=cube_method_findcolour(c,x,y,z)
+    while cube_method_good_orient(fourth[2], x, y, z)!=True:
+        # c.cube_method_mixer("BDbdBDb")
+        print(fourth)
+        c.B_r()
+        c.D_r()
+        c.B()
+        c.D()
+        fourth = cube_method_findcolour(c, x, y, z)
 
-        while cube_method_good_orient(fourth[2], x, y, z)!=True:
-            # c.cube_method_mixer("BDbdBDb")
-            c.B_r()
-            c.D_r()
-            c.B()
-            c.D()
-            c.B_r()
-            c.D_r()
-            c.B()
-
-        return True
+    return True
 
 def cube_method_middle1(c, x=5, y=-1, z=6):
     c.cube_method_flipper("x")
     c.cube_method_flipper("x")
     c.cube_method_flipper("y")
+    #adjust_color_middle_to_face(c, "Y", "U", "G", "F")
 
     first=cube_method_findcolour(c,x,y,z)
 
@@ -1687,7 +1771,6 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
         c.F_r()
         c.U()
         c.F()
-        c.U()
 
         return True
 
@@ -2614,52 +2697,5 @@ def cube_method_seventh_step(c):
 # van még cubie amire ez igaz?
 # addig megy a flip xy amíg ez igaz nem lesz
 
-def adjust_color_middle_to_face(c, middlecolor, side_to_flip_to):
-    #c.cube_method_did_cubie_move(facekar)
-    list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
-    # ebben keresem a közepeket, (ezek amiknek a col ban 2 db -1 és egy col van)
-    # ha megvannak elmentem dictben, a colorral együtt
-    # ezután forgatom az egész kockát flippel amíg a lekért listában
-    # a pos nem az ahova akarom forgatni a kockát
-    dict_of_num_color={1: "R", 2:"Y",3:"W", 4:"B", 5:"O", 6:"G"}
-    dict_of_color_num={"R":1, "Y":2,"W":3, "B":4, "O":5, "G":6}
-    dict_of_middles={}
-    for tup in list_of_cubie_pos_name_color:
-        if list(tup[2]).count(-1)==2:
-            # print(tup)
-            for color in tup[2]:
-                if color!=-1:
-                    dict_of_middles[dict_of_num_color[color]]=tup[0]
-    print(dict_of_middles) # dictben van a color és a position
-    dict_of_middle_sides={'L': [0, 1, 1], 'U': [1, 0, 1], 'F': [1, 1, 0], 'B': [1, 1, 2], 'D': [1, 2, 1], 'R': [2, 1, 1]}
-    steps=["x","x","x","x","y","y","y","y","x","y","y","y","y","x","y","y","y","y","x","y","y","y","y","x","y","y","y","y","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x","y","x","x","x","x"]
-    stepper=0
-    while dict_of_middles[middlecolor]!=dict_of_middle_sides[side_to_flip_to]:
-        c.cube_method_flipper(steps[stepper])
-        list_of_cubie_pos_name_color=c.cube_method_get_cubie_pos_name_color()
-        dict_of_middles={}
-        for tup in list_of_cubie_pos_name_color:
-            if list(tup[2]).count(-1)==2:
-                # print(tup)
-                for color in tup[2]:
-                    if color!=-1:
-                        dict_of_middles[dict_of_num_color[color]]=tup[0]
-
-        print("stepper: ", stepper)
-        print((dict_of_middles))
-        print("sides: ")
-        print(dict_of_middle_sides)
-        stepper+=1
-        if stepper>=len(steps):
-            print("NOOOO")
-            break
-
-    if dict_of_middles[middlecolor]==dict_of_middle_sides[side_to_flip_to]:
-        print("TRUE")
-    else:
-        print("NOT TRUE")
-    # minden
-    # dictben kell addig újrahívni ezt amíg mondjuk red az U nem lesz
-    # ez még lehet cube tulajdonságnak tenni
 
 
