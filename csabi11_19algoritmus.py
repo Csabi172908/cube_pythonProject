@@ -807,8 +807,9 @@ def side_koords(c):
             str_name=""
             for color in tup[2]:
                 if color!=-1:
-                    str_name+=dict_of_num_color[color]
-            dict_of_sides_col_pos[str_name]=tup[0]
+                    pass
+                    #str_name+=dict_of_num_color[color]
+            #dict_of_sides_col_pos[str_name]=tup[0]
 
 def dict_of_sides_positions_one_color(c,color):
     '''returnöl egy dictet amiben az adott color side-jai vannak színnel kódolva'''
