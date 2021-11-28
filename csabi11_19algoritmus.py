@@ -2159,11 +2159,11 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
     upperfirstmiddle=cube_method_which_colour(c, p[0])
     uppersecondright=cube_method_which_colour(c, p[1])
     upperbackmiddle=cube_method_which_colour(c, p[2])
-    if upperfirstmiddle[2][2]==2:
+    if upperfirstmiddle[2][1]==2:
         
-        if uppersecondright[2][2]==2:
+        if uppersecondright[2][1]==2:
 
-            if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][1]==2:
 
                 return True
 
@@ -2191,7 +2191,7 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
         
         else:
 
-            if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][1]==2:
 
                 c.U()
 
@@ -2226,9 +2226,9 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 return True
     else:
 
-        if uppersecondright[2][2]==2:
+        if uppersecondright[2][1]==2:
 
-            if upperbackmiddle[2][2] == 2:
+            if upperbackmiddle[2][1] == 2:
 
                 c.U_r()
 
@@ -2261,7 +2261,7 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
 
         else:
 
-            if upperbackmiddle[2][2] == 2:
+            if upperbackmiddle[2][1] == 2:
 
                 c.F()
                 c.R()
@@ -2305,91 +2305,103 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 return True
 
 p=['100', '201', '102']
-def cube_method_fifth_step1(c, p):
+def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
+    print(cubie_checking(c, [([1,1,0], np.array([-1, -1, 4]))]))
     upperfirstmiddle=cube_method_which_colour(c, p[0])
     uppersecondleft=cube_method_which_colour(c, p[1])
     upperbackmiddle=cube_method_which_colour(c, p[2])
     
     if upperfirstmiddle[2][2]==4:
 
-      return True
+        return True
 
     else:
 
-      if uppersecondleft[2][0]==4:
+        if uppersecondleft[2][0]==4:
 
-          c.R()
-          c.U()
-          c.R_r()
-          c.U()
-          c.R()
-          c.U()
-          c.U()
-          c.R_r()
-          c.U()
+            c.R()
+            c.U()
+            c.R_r()
+            c.U()
+            c.R()
+            c.U()
+            c.U()
+            c.R_r()
+            c.U()
 
-          return True
+            return True
       
-      else:
+        else:
 
-         if upperbackmiddle[2][2]==4:
+            if upperbackmiddle[2][2]==4:
 
-           c.cube_method_flipper("y")
-           c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 6]))]))
 
-           c.R()
-           c.U()
-           c.R_r()
-           c.U()
-           c.R()
-           c.U()
-           c.U()
-           c.R_r()
-           c.U()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U()
+                c.R()
+                c.U()
+                c.U()
+                c.R_r()
+                c.U()
 
-           c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 1]))]))
 
-           c.R()
-           c.U()
-           c.R_r()
-           c.U()
-           c.R()
-           c.U()
-           c.U()
-           c.R_r()
-           c.U()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U()
+                c.R()
+                c.U()
+                c.U()
+                c.R_r()
+                c.U()
 
-           return True
+                return True
 
-         else:
+            else:
 
-           c.cube_method_flipper("y")
-           c.cube_method_flipper("y")
-           c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 1]))]))
 
-           c.R()
-           c.U()
-           c.R_r()
-           c.U()
-           c.R()
-           c.U()
-           c.U()
-           c.R_r()
-           c.U()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U()
+                c.R()
+                c.U()
+                c.U()
+                c.R_r()
+                c.U()
 
-           c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 4]))]))
 
-           return True
+                return True
 
 p=['100', '201', '102']
-def cube_method_fifth_step2(c, p):
+def cube_method_fifth_step2(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
     upperfirstmiddle=cube_method_which_colour(c, p[0])
     uppersecondleft=cube_method_which_colour(c, p[1])
     upperbackmiddle=cube_method_which_colour(c, p[2])
+    print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 4]))]))
 
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
+
+    upperfirstmiddle = cube_method_which_colour(c, p[0])
+    uppersecondleft = cube_method_which_colour(c, p[1])
+    upperbackmiddle = cube_method_which_colour(c, p[2])
+    print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 5]))]))
     
     if upperfirstmiddle[2][2]==5:
 
@@ -2397,91 +2409,94 @@ def cube_method_fifth_step2(c, p):
 
     else:
 
-      if uppersecondleft[2][0]==5:
+        if uppersecondleft[2][0]==5:
 
-          c.R()
-          c.U()
-          c.R_r()
-          c.U()
-          c.R()
-          c.U()
-          c.U()
-          c.R_r()
-          c.U()
+            c.R()
+            c.U()
+            c.R_r()
+            c.U()
+            c.R()
+            c.U()
+            c.U()
+            c.R_r()
+            c.U()
 
-          return True
+            return True
       
-      else:
+        else:
 
-           c.cube_method_flipper("y")
-           c.cube_method_flipper("y")
+            c.cube_method_flipper("y")
+            c.cube_method_flipper("y")
 
-           c.L_r()
-           c.U_r()
-           c.L()
-           c.U_r()
-           c.L_r()
-           c.U_r()
-           c.U_r()
-           c.L()
-           c.U_r()
+            c.L_r()
+            c.U_r()
+            c.L()
+            c.U_r()
+            c.L_r()
+            c.U_r()
+            c.U_r()
+            c.L()
+            c.U_r()
 
-           c.cube_method_flipper("y")
-           c.cube_method_flipper("y")
+            c.cube_method_flipper("y")
+            c.cube_method_flipper("y")
 
-           c.R()
-           c.U()
-           c.R_r()
-           c.U()
-           c.R()
-           c.U()
-           c.U()
-           c.R_r()
-           c.U()
+            c.R()
+            c.U()
+            c.R_r()
+            c.U()
+            c.R()
+            c.U()
+            c.U()
+            c.R_r()
+            c.U()
 
-           return True
+            return True
 
+    c.cube_method_flipper("y")
 
-def cube_method_fifth_step3(c, string1='100', string2='201'):
+def cube_method_fifth_step3(c, string1=[1, 0, 0], string2=[2, 0, 1]):
     upperfirstmiddle=cube_method_which_colour(c, string1)
     uppersecondleft=cube_method_which_colour(c, string2)
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
+    upperfirstmiddle = cube_method_which_colour(c, string1)
+    uppersecondleft = cube_method_which_colour(c, string2)
     
     if upperfirstmiddle[2][2]==6:
 
-      return True
+        return True
 
     else:
 
-      if uppersecondleft[2][0]==6:
+        if uppersecondleft[2][0]==6:
 
-          c.R()
-          c.U()
-          c.R_r()
-          c.U()
-          c.R()
-          c.U()
-          c.U()
-          c.R_r()
-          c.U()
+            c.R()
+            c.U()
+            c.R_r()
+            c.U()
+            c.R()
+            c.U()
+            c.U()
+            c.R_r()
+            c.U()
 
-          return True
+            return True
       
-      else:
+        else:
 
-           c.R()
-           c.U()
-           c.R_r()
-           c.U()
-           c.R()
-           c.U()
-           c.U()
-           c.R_r()
-           c.U()
+            c.R()
+            c.U()
+            c.R_r()
+            c.U()
+            c.R()
+            c.U()
+            c.U()
+            c.R_r()
+            c.U()
            
-           return True
+            return True
 
 dict_of_color_num={"R":1, "Y":2,"W":3, "B":4, "O":5, "G":6}
 def cube_method_sixth_step(c):

@@ -14,4 +14,7 @@ def white_cross(c):
     cube_method_middle3(c)
     cube_method_middle4(c)
     cube_method_yellow_cross(c)
+    cube_method_fifth_step1(c)
+    cube_method_fifth_step2(c)
+    cube_method_fifth_step3(c)
 
