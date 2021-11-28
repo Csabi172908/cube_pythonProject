@@ -870,8 +870,8 @@ def cube_method_good_orient(edge, x=-1, y=-1, z=-1):
 
 def cube_method_which_colour(c, string):
     l=c.cube_method_get_cubie_pos_name_color()
-    for i in range(l):
-      if l[i][1] == string:
+    for i in range(len(l)):
+      if l[i][0] == string:
         return l[i]
 
 def yellow(c):
@@ -1661,20 +1661,16 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
     c.cube_method_flipper("x")
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
-    #print(cubie_checking(c, [([1,1,0], np.array([-1,-1,5]))]))
-    #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1,  6]))]))
-    #adjust_color_middle_to_face(c, "Y", "U", "G", "F")
+
 
     first=cube_method_findcolour(c,x,y,z)
 
     if first[0][1]==1:
   
         if first[0][2]==0:
-            print("front")
-            #c.cube_method_3d_drawer()
+
             if first[0][0]==0:
-                print("left")
-                #c.cube_method_3d_drawer()
+
                 c.U_r()
                 c.L_r()
                 c.U()
@@ -1685,8 +1681,7 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.F_r()
 
             elif first[0][0]==2:
-                print("right")
-                #c.cube_method_3d_drawer("URurufUF")
+
                 c.U()
                 c.R()
                 c.U_r()
@@ -1697,27 +1692,12 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.F()
 
         elif first[0][2]==2:
-            print("back")
-            #c.cube_method_3d_drawer()
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
+
 
             if first[0][0]==0:
-                print("left")
-                #c.cube_method_3d_drawer()
-                c.U_r()
-                c.L_r()
-                c.U()
-                c.L()
-                c.U()
-                c.F()
-                c.U_r()
-                c.F_r()
-                # c.cube_method_3d_drawer()
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
 
-            elif first[0][0]==2:
-                print("right")
-                #c.cube_method_3d_drawer()
                 c.U()
                 c.R()
                 c.U_r()
@@ -1726,12 +1706,28 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.F_r()
                 c.U()
                 c.F()
-                # c.cube_method_3d_drawer()
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-    #c.cube_method_3d_drawer()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+            elif first[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+                c.U_r()
+                c.L_r()
+                c.U()
+                c.L()
+                c.U()
+                c.F()
+                c.U_r()
+                c.F_r()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+    first = cube_method_findcolour(c, x, y, z)
     if first[0][1]==0:
-        #c.cube_method_3d_drawer()
+
         if first[0][0]==0:
 
               c.U_r()
@@ -1741,7 +1737,7 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
             if first[0][2]==0:
 
                 pass
-              
+
             if first[0][2]==2:
 
                 c.U()
@@ -1760,12 +1756,12 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
     c.U()
     c.F()
 
+    first = cube_method_findcolour(c, x, y, z)
     if cube_method_good_orient(first[2], x, y, z)==True:
 
-            return True
+        pass
       
     else:
-
         c.U()
         c.R()
         c.U_r()
@@ -1783,7 +1779,10 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
         c.U()
         c.F()
 
-        return True
+
+
+
+
 
 def cube_method_middle2(c, x=1, y=-1, z=6):
     second=cube_method_findcolour(c,x,y,z)
@@ -1816,21 +1815,9 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
 
         if second[0][2]==2:
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-
             if second[0][0]==0:
-
-                c.U_r()
-                c.L_r()
-                c.U()
-                c.L()
-                c.U()
-                c.F()
-                c.U_r()
-                c.F_r()
-
-            if second[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
 
                 c.U()
                 c.R()
@@ -1841,9 +1828,26 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
                 c.U()
                 c.F()
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-      
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+            if second[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+                c.U_r()
+                c.L_r()
+                c.U()
+                c.L()
+                c.U()
+                c.F()
+                c.U_r()
+                c.F_r()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+    second = cube_method_findcolour(c, x, y, z)
     if second[0][1]==0:
 
         if second[0][0]==0:
@@ -1874,6 +1878,7 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
     c.U_r()
     c.F_r()
 
+    second = cube_method_findcolour(c, x, y, z)
     if cube_method_good_orient(second[2], x, y, z)==True:
 
             return True
@@ -1935,21 +1940,9 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
 
         if third[0][2]==2:
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-
             if third[0][0]==0:
-
-                c.U_r()
-                c.L_r()
-                c.U()
-                c.L()
-                c.U()
-                c.F()
-                c.U_r()
-                c.F_r()
-
-            if third[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
 
                 c.U()
                 c.R()
@@ -1960,9 +1953,26 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
                 c.U()
                 c.F()
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-      
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+            if third[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+                c.U_r()
+                c.L_r()
+                c.U()
+                c.L()
+                c.U()
+                c.F()
+                c.U_r()
+                c.F_r()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+    third = cube_method_findcolour(c, x, y, z)
     if third[0][1]==0:
 
         if third[0][0]==0:
@@ -1993,8 +2003,8 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
     c.U()
     c.F()
 
-
-    if cube_method_good_orient(third[0], x, y, z)==True:
+    third = cube_method_findcolour(c, x, y, z)
+    if cube_method_good_orient(third[2], x, y, z)==True:
 
             return True
       
@@ -2022,40 +2032,13 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
 
 def cube_method_middle4(c, x=5, y=-1, z=4):
 
-      second=cube_method_findcolour(c,x,y,z)
+      fourth=cube_method_findcolour(c,x,y,z)
 
-      if second[0][1]==1:
+      if fourth[0][1]==1:
   
-         if second[0][2]==0:
+         if fourth[0][2]==0:
 
-            if second[0][0]==0:
-
-                c.U_r()
-                c.L_r()
-                c.U()
-                c.L()
-                c.U()
-                c.F()
-                c.U_r()
-                c.F_r()
-
-            if second[0][0]==2:
-
-                c.U()
-                c.R()
-                c.U_r()
-                c.R_r()
-                c.U_r()
-                c.F_r()
-                c.U()
-                c.F()
-
-         if second[0][2]==2:
-
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-
-            if second[0][0]==0:
+            if fourth[0][0]==0:
 
                 c.U_r()
                 c.L_r()
@@ -2066,7 +2049,7 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U_r()
                 c.F_r()
 
-            if second[0][0]==2:
+            if fourth[0][0]==2:
 
                 c.U()
                 c.R()
@@ -2077,27 +2060,61 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U()
                 c.F()
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
-      
-      if second[0][1]==0:
+         if fourth[0][2]==2:
 
-          if second[0][0]==0:
+            c.cube_method_flipper("y")
+            c.cube_method_flipper("y")
+
+            if fourth[0][0]==0:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+                c.U()
+                c.R()
+                c.U_r()
+                c.R_r()
+                c.U_r()
+                c.F_r()
+                c.U()
+                c.F()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+            if fourth[0][0]==2:
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+                c.U_r()
+                c.L_r()
+                c.U()
+                c.L()
+                c.U()
+                c.F()
+                c.U_r()
+                c.F_r()
+
+                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")
+
+      fourth = cube_method_findcolour(c, x, y, z)
+      if fourth[0][1]==0:
+
+          if fourth[0][0]==0:
 
               c.U_r()
 
-          if second[0][0]==1:
+          if fourth[0][0]==1:
 
-              if second[0][2]==1:
+              if fourth[0][2]==1:
 
                   pass
               
-              if second[0][2]==2:
+              if fourth[0][2]==2:
 
                 c.U()
                 c.U()
           
-          if second[0][0]==2:
+          if fourth[0][0]==2:
 
               c.U()
 
@@ -2110,7 +2127,8 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
       c.U_r()
       c.F_r()
 
-      if cube_method_good_orient(second[0], x, y, z)==True:
+      fourth = cube_method_findcolour(c, x, y, z)
+      if cube_method_good_orient(fourth[2], x, y, z)==True:
 
             return True
       
@@ -2135,154 +2153,156 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
 
             return True
 
-p=['100','201' , '102']
-def cube_method_yellow_cross(c, p):
-      upperfirstmiddle=cube_method_which_colour(c, p[0])
-      uppersecondright=cube_method_which_colour(c, p[1])
-      upperbackmiddle=cube_method_which_colour(c, p[2])
-      if upperfirstmiddle[2][2]==2:
+
+def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
+
+    upperfirstmiddle=cube_method_which_colour(c, p[0])
+    uppersecondright=cube_method_which_colour(c, p[1])
+    upperbackmiddle=cube_method_which_colour(c, p[2])
+    if upperfirstmiddle[2][2]==2:
         
         if uppersecondright[2][2]==2:
 
-          if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][2]==2:
 
-            return True
+                return True
 
-          else:
+            else:
 
-            c.U()
-            c.U()
+                c.U()
+                c.U()
 
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
+                return True
         
         else:
 
-          if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][2]==2:
 
-            c.U()
+                c.U()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
+
+                return True
          
-          else:
+            else:
 
-            c.U()
+                c.U()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
-      else:
+                return True
+    else:
 
         if uppersecondright[2][2]==2:
 
-          if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][2] == 2:
 
-            c.U_r()
+                c.U_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
-      
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-          else:
+                return True
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+            else:
 
-            return True
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
+
+                return True
 
         else:
 
-          if upperbackmiddle[2][2]==2:
+            if upperbackmiddle[2][2] == 2:
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
+                return True
 
-          else:
+            else:
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r() 
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            c.F()
-            c.R()
-            c.U()
-            c.R_r()
-            c.U_r()
-            c.F_r()
+                c.F()
+                c.R()
+                c.U()
+                c.R_r()
+                c.U_r()
+                c.F_r()
 
-            return True
+                return True
 
 p=['100', '201', '102']
 def cube_method_fifth_step1(c, p):
