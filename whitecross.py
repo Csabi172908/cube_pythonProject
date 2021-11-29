@@ -18,5 +18,10 @@ def white_cross(c):
     cube_method_fifth_step2(c)
     cube_method_fifth_step3(c)
     cube_method_sixth_step(c)
-    #cube_method_seventh_step(c)
+    cube_method_seventh_step(c)
+
+    c.cube_method_flipper("y")
+    c.cube_method_flipper("y")
+    c.cube_method_flipper("x")
+    c.cube_method_flipper("x")
 
