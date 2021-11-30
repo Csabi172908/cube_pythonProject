@@ -504,6 +504,16 @@ class Cube:
             cnum+=1
             cnum=cnum%3
 
+            compsum = [0, 0, 0]
+            for vertex in surface:
+                for i in range(0, 3):
+                    compsum[i] += abs(verticesl[vertex][i])
+
+            paint = False
+            for i in compsum:
+                if abs(i - 11.8) < 0.001:
+                    paint = True
+
             for vertex in surface:
                 if colornumsl[cnum] in dict_of_colornum_rbg.keys():
                     glColor3fv(dict_of_colornum_rbg[colornumsl[cnum]])
