@@ -9,71 +9,80 @@ Original file is located at
 
 import random
 import numpy as np
-
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-
+"""
+   A kis kockák Class-a, a kis alap cubie-k forgatásait tartalmazza
+"""
 class Cubie:
 
-    def __init__(self,x=[-1,-1,-1]): # x y z irányban a színek
-        self.l=np.array(x)
+    # cubie konstruktora, x y z irányban a színek, számkódokkal
+    def __init__(self, x=[-1, -1, -1]):
+        self.l = np.array(x)
 
+    #cubie bal (L) és jobb (R) forgatás transzformációja
     def RL(self):
-        # print("t")
-        # füzetben ábra, z küröl forgatás, azaz első index helyén marad, másik 2 csere
-        # kérdés az, hogy ez lehet-e jó reprezentáció cubiera? él, sarok forgatás vizualizáció úgy, hogy
-        # a hiányzó színek -1 esek?
         self.l
-        self.l[[1,2]]=self.l[[2,1]]  # x körüli forgatás, ez az R és L is, R' L' is
+        self.l[[1, 2]] = self.l[[2, 1]]  # x körüli forgatás, ez az R és L is, R' L' is
 
+    # cubie fenti (U) és alsó (D) forgatás transzformációja
     def UD(self):
       self.l
-      self.l[[0,2]]=self.l[[2,0]]
+      self.l[[0, 2]] = self.l[[2, 0]]
 
+    # cubie elülső (F) és hátsó (B) forgatás transzformációja
     def FB(self):
       self.l
-      self.l[[0,1]]=self.l[[1,0]]
+      self.l[[0, 1]] = self.l[[1, 0]]
 
+    #kiiratás
     def __str__(self):
         return str(self.l)
 
+
+"""
+   A Rubik-kocka Class-a, az alap cubie-k forgatásait tartalmazza,
+"""
 class Cube:
 
-    def __init__(self,x=[[[str(k)+str(j)+str(i) for i in range(3)] for j in range(3)]for k in range(3)]): # ide kell immutabel inicializálás, fix tárhely miatt
-        self.historystring = ""
-        self.l=np.array(x) #itt ha self.l=x volt akkor az a mindegyiknél létrejövő x=np.array([[[]]]) re mutatott?
-        self.dict_of_num_cubie={}
-        self.dict_of_cubie_num={}
+    #konstruktor függvény, inicializálás 3*3*3-as numpy-array-ben
+    def __init__(self, x = [[[str(k)+str(j)+str(i) for i in range(3)] for j in range(3)]for k in range(3)]):
+        self.historystring = "" # a kockán végrehajtott forgatások
+        self.l = np.array(x) #itt ha self.l=x volt akkor az a mindegyiknél létrejövő x=np.array([[[]]]) re mutatott?
+        self.dict_of_num_cubie = {} #kocka cubie-ainak dictionary-je
+        self.dict_of_cubie_num = {}
 
+        # feltöltés cubie-kal
         for i in range(3):
             for j in range(3):
                 for k in range(3):
                     self.dict_of_num_cubie[str(i)+str(j)+str(k)]=Cubie()
 
+    #kocka cubie-ainak kiiratása
     def __str__(self):
         return str(self.l)
 
     def X_to_Y(self): #a numpy array-t átkonvertálja X szerinti rétegződésből Y szerinti rétegződésbe
 
       self.l[0,[0,2],:]=self.l[0,[2,0], :]
-      self.l[[0,2], 0, :]=self.l[[2,0], 0, :]
+      self.l[[0,2],0,:]=self.l[[2,0],0, :]
       self.l[0,[0,1],:]=self.l[0,[1,0], :]
-      self.l[[0,1], 0, :]=self.l[[1,0], 0, :]
+      self.l[[0,1],0,:]=self.l[[1,0],0, :]
       self.l[0,[0,2],:]=self.l[0,[2,0], :]
       self.l[0,[1,2],:]=self.l[0,[2,1], :]
       self.l[2,[0,1],:]=self.l[2,[1,0], :]
       self.l[1,[0,2],:]=self.l[1,[2,0], :]
-      self.l[[1,2], 0, :]=self.l[[2,1], 0, :]
+      self.l[[1,2],0,:]=self.l[[2,1],0, :]
       self.l[1,[0,2],:]=self.l[1,[2,0], :]
       self.l[2,[0,1],:]=self.l[2,[1,0], :]
 
     def Y_to_X(self): #a numpy array-t átkonvertálja Y szerinti rétegződésből X szerinti rétegződésbe
 
       self.l[0,[0,1],:]=self.l[0,[1,0],:]
-      self.l[[0,1],0,:]=self.l[[1,0], 0,:]
+      self.l[[0,1],0,:]=self.l[[1,0],0,:]
       self.l[0,[0,1],:]=self.l[0,[1,0],:]
       self.l[0,[0,2],:]=self.l[0,[2,0],:]
       self.l[[0,2],0,:]=self.l[[2,0],0,:]
@@ -89,12 +98,12 @@ class Cube:
       self.l[0,:,[0,2]]=self.l[0,:,[2,0]]
       self.l[[0,2],:,0]=self.l[[2,0],:,0]
       self.l[0,:,[0,1]]=self.l[0,:,[1,0]]
-      self.l[[0,1], :, 0]=self.l[[1,0],:, 0]
+      self.l[[0,1],:,0]=self.l[[1,0],:,0]
       self.l[0,:,[0,2]]=self.l[0,:,[2,0]]
       self.l[0,:,[1,2]]=self.l[0,:,[2,1]]
       self.l[2,:,[0,1]]=self.l[2,:,[1,0]]
       self.l[1,:,[0,2]]=self.l[1,:,[2,0]]
-      self.l[[1,2],:, 0]=self.l[[2,1],:,0]
+      self.l[[1,2],:,0]=self.l[[2,1],:,0]
       self.l[1,:,[0,2]]=self.l[1,:,[2,0]]
       self.l[2,:,[0,1]]=self.l[2,:,[1,0]]
 
@@ -112,29 +121,30 @@ class Cube:
       self.l[2,:,[0,1]]=self.l[2,:,[1,0]]
       self.l[1,:,[0,2]]=self.l[1,:,[2,0]]
 
-    def converter(to_what,self): #swtich
-        pass
 
-    def R(self): # x y z koordináták, z=0 front, x=2 right
+    """
+        Forgatások: a kommentek minden forgatásnál ugyanazok
+    """
 
-        self.historystring += "R"
+    # a jobb oldali forgatása ( clockwise )
+    def R(self):
+
+        self.historystring += "R" # a forgatás feljegyzés
         for i in self.l[2,:,:]:
             for j in i:
-                #print(j)
-                self.dict_of_num_cubie[j].RL() # minden forgatott cubie saját helyzetét is megváltoztatja
+                self.dict_of_num_cubie[j].RL() # a cubie-k forgatása
 
-        self.l[2,:,:]=self.l[2,:,:].transpose() # jobbra forg T aztán oszlopcsere
+        self.l[2,:,:]=self.l[2,:,:].transpose() # a kocka forgatása
         self.l[2,:,[0,2]]=self.l[2,:,[2,0]]
 
-    def L_r(self):
+    def L_r(self): #itt azért van fordítva, mert ez véletlen fordított írányú forgatás lett, és így lehetett a leggyorsabban megoldani a javítást
 
         self.historystring += "L"
         for i in self.l[0,:,:]:
             for j in i:
-                #print(j)
-                self.dict_of_num_cubie[j].RL() # minden forgatott cubie saját helyzetét is megváltoztatja
+                self.dict_of_num_cubie[j].RL()
 
-        self.l[0,:,:]=self.l[0,:,:].transpose() # jobbra forg T aztán oszlopcsere
+        self.l[0,:,:]=self.l[0,:,:].transpose()
         self.l[0,:,[2,0]]=self.l[0,:,[0,2]]
 
     def U(self):
@@ -144,25 +154,23 @@ class Cube:
 
       for i in self.l[0,:,:]:
             for j in i:
-                #print(j)
                 self.dict_of_num_cubie[j].UD()
 
-      self.l[0,:,:]=self.l[0,:,:].transpose() # jobbra forg T aztán oszlopcsere
+      self.l[0,:,:]=self.l[0,:,:].transpose()
       self.l[0,:,[2,0]]=self.l[0,:,[0,2]]
 
       self.Y_to_X()
 
-    def D_r(self):
+    def D_r(self): #itt azért van fordítva, mert ez véletlen fordított írányú forgatás lett, és így lehetett a leggyorsabban megoldani a javítást
 
       self.historystring += "D"
       self.X_to_Y()
 
       for i in self.l[2,:,:]:
             for j in i:
-                #print(j)
                 self.dict_of_num_cubie[j].UD()
 
-      self.l[2,:,:]=self.l[2,:,:].transpose() # jobbra forg T aztán oszlopcsere
+      self.l[2,:,:]=self.l[2,:,:].transpose()
       self.l[2,:,[0,2]]=self.l[2,:,[2,0]]
 
       self.Y_to_X()
@@ -174,29 +182,30 @@ class Cube:
 
       for i in self.l[0,:,:]:
             for j in i:
-                #print(j)
                 self.dict_of_num_cubie[j].FB()
 
-      self.l[0,:,:]=self.l[0,:,:].transpose() # jobbra forg T aztán oszlopcsere
+      self.l[0,:,:]=self.l[0,:,:].transpose()
       self.l[0,:,[0,2]]=self.l[0,:,[2,0]]
 
       self.Z_to_X()
 
-    def B_r(self):
+    def B_r(self): #itt azért van fordítva, mert ez véletlen fordított írányú forgatás lett, és így lehetett a leggyorsabban megoldani a javítást
 
       self.historystring += "B"
       self.X_to_Z()
 
       for i in self.l[2,:,:]:
             for j in i:
-                #print(j)
                 self.dict_of_num_cubie[j].FB()
 
-      self.l[2,:,:]=self.l[2,:,:].transpose() # jobbra forg T aztán oszlopcsere
+      self.l[2,:,:]=self.l[2,:,:].transpose()
       self.l[2,:,[2,0]]=self.l[2,:,[0,2]]
 
       self.Z_to_X()
 
+    """
+        Visszafele forgatások ( háromszor a sima forgatás )
+    """
     def R_r(self):
 
       for i in range(3):
@@ -227,10 +236,13 @@ class Cube:
       for i in range(3):
         self.B_r()
 
-    def cube_method_mixer(self,steps=20):
+    """
+        Random forgatás gyártása
+    """
+    def cube_method_mixer(self, steps=20):
     # ebbe jöhet stringsorozat vagy szám
-      if type(steps)==int:
-          for i in range(steps):
+      if type(steps)==int: #itt ha szám beírva
+          for i in range(steps): #minden számhoz tartozik egy forgatás
             a=random.randint(1,12)
             if a==1:
               self.R()
@@ -256,7 +268,7 @@ class Cube:
               self.F_r()
             if a==12:
               self.B_r()
-      else:
+      else: # ha stringsozattot írunk be
           for current_step_string in steps:
             if current_step_string=="R":
                 self.R()
@@ -287,6 +299,9 @@ class Cube:
             if current_step_string == "y":
                 self.cube_method_flipper("y")
 
+    """
+        Rubik-kocka beszínezése
+    """
     def cube_method_all_side_loader(self,string="".join(["W"*9,"Y"*9,"O"*9,"G"*9,"R"*9,"B"*9])):
         # alapállapotba betölti a kockát
         sorrend="UDLFRB"
@@ -301,12 +316,13 @@ class Cube:
 
         tuples_of_strings=[]
         counter_of_sides=0
+
         for i in range(0,len(string),9):
-            #print(string[i:i+9])
+
             tuples_of_strings.append((string[i:i+9],sorrend[counter_of_sides],sides[counter_of_sides]))
             counter_of_sides+=1
-            #print(tuples_of_strings)
-            # minde 3 koord lehet 0 1 2 ez 3*3*3 aza 27 koord amik a cubiek
+
+            # minden 3 koord lehet 0 1 2 ez 3*3*3 aza 27 koord amik a cubiek
             # oldalak:x - 0:: , 2::
             #    z- ::0 ::2
 
@@ -467,16 +483,8 @@ class Cube:
                     (4, 0, 3, 6),
                     (6, 7, 5, 4),)
 
-        dict_of_num_color={1: "R", 2:"Y",3:"W", 4:"B", 5:"O", 6:"G"}
-        dict_of_color_num={"R":1, "Y":2,"W":3, "B":4, "O":5, "G":6}
-        dict_of_colornum_rbg={1: (256, 0, 0), 2:(256, 256, 0),3:(256, 256, 256), 4:(0, 0, 256), 5:(0, 0, 0), 6:(0, 256, 0)}
-
-        colors = ((1, 0, 0), # red
-                  (0, 1, 0), # green
-                  (252, 173, 3), #orange
-                  (1, 1, 0), #yellow
-                  (256, 256, 256), # white
-                  (0, 0, 1)) # blue
+        # dict_of_num_color={1: "R", 2:"Y",3:"W", 4:"B", 5:"O", 6:"G"}
+        dict_of_colornum_rbg={1: (1.0, 0.0, 0.0), 2:(1.0, 1.0, 0.0),3:(1.0, 1.0, 1.0), 4:(0.0, 0.0, 1.0), 5:(1.0, 0.5, 0.0), 6:(0.0, 1.0, 0.0)}
 
         glBegin(GL_QUADS)
 
@@ -749,6 +757,10 @@ class Cube:
 
         return did_it_turn
 
+
+"""
+    Segédfüggvények az algoritmushoz és a megjelenítéshez és ellenőzéshez
+"""
 def adjust_color_middle_to_face(c, middlecolor, side_to_flip_to, middlesidecolor, middle_side_to_flip_to):
     '''
     input: middle cubie szín, hova akarjuk, middle cubie szín, hova akarjuk
@@ -982,11 +994,24 @@ def cubie_checkingbool(c, list):
                     false.append(l[j])
     return false
 
-
+"""
+    A beginner-method algoritmusának lépései:
+        Tartalmazza: egy berakandó cubie a helyének megtalálása majd helytől függően célpozícióba rakása
+    
+    https://cubesolve.com/rubik-kocka-kirakasa-hu/?fbclid=IwAR1V9QHqIRLmV9AY7XFY4gw4mXqWfyY4g556KynOu-R73viBLE-15oWDkW4
+"""
+"""
+    A fehér kereszt megformálása:
+    
+"""
+#Első fehér cubie berakása ( fehér-kék cubie )
 def white_cross_first(c, x=-1, y=3, z=4):
+    """
+     A Fehér-kék cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     first = cube_method_findcolour(c, x, y, z)
     if first[0][2] == 0:
-        # z=0 oldal
+
         if first[0][1] == 0:
             # c.cube_method_mixer("UU")
             c.U()
@@ -1056,7 +1081,7 @@ def white_cross_first(c, x=-1, y=3, z=4):
             c.B()
             c.B()
 
-    if cube_method_good_orient(first[2], x, y, z) == True:
+    if cube_method_good_orient(first[2], x, y, z) == True: #itt már a helyén van a kocka, de nem biztos, hogy a megfelelő orientációban
 
         return True
 
@@ -1069,8 +1094,11 @@ def white_cross_first(c, x=-1, y=3, z=4):
 
         return True
 
-
+#Második fehér cubie berakása ( fehér-piros cubie )
 def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
+    """
+         A Fehér-piros cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     second = cube_method_findcolour(c, x, y, z)
     if second[0][2] == 0:
 
@@ -1147,7 +1175,7 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
             c.R()
             c.R()
 
-    if cube_method_good_orient(second[2], x, y, z) == True:
+    if cube_method_good_orient(second[2], x, y, z) == True: #itt már a helyén van a kocka, de nem biztos, hogy a megfelelő orientációban
 
         return True
 
@@ -1162,8 +1190,11 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
 
         return True
 
-
+#Harmadik fehér cubie berakása ( fehér-zöld cubie )
 def white_cross_third(c, x=-1, y=3, z=6):
+    """
+        A Fehér-zöld cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     third = cube_method_findcolour(c, x, y, z)
     if third[0][2] == 0:
 
@@ -1238,7 +1269,7 @@ def white_cross_third(c, x=-1, y=3, z=6):
             c.F()
             c.F()
 
-    if cube_method_good_orient(third[2], x, y, z) == True:
+    if cube_method_good_orient(third[2], x, y, z) == True: #itt már a helyén van a kocka, de nem biztos, hogy a megfelelő orientációban
 
         return True
 
@@ -1253,8 +1284,11 @@ def white_cross_third(c, x=-1, y=3, z=6):
 
         return True
 
-
+#negyedik fehér cubie berakása ( fehér-narancs cubie )
 def white_cross_fourth(c, x=5, y=3, z=-1):
+    """
+            A Fehér-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     fourth = cube_method_findcolour(c, x, y, z)
     if fourth[0][2] == 0:
 
@@ -1328,7 +1362,7 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
             c.L()
             c.L()
 
-    if cube_method_good_orient(fourth[2], x, y, z) == True:
+    if cube_method_good_orient(fourth[2], x, y, z) == True: #itt már a helyén van a kocka, de nem biztos, hogy a megfelelő orientációban
 
         return True
 
@@ -1344,7 +1378,15 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
 
         return True
 
+"""
+    A fehér oldal sarkainak berakása
+"""
+
+#ötödik fehér cubie berakása ( fehér-zöld-piros cubie )
 def cube_method_firstcorner(c, x=1, y=3, z=6):
+    """
+        A Fehér-zöld-piros cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     first = cube_method_findcolour(c, x, y, z)
     if first[0][2] == 2:
 
@@ -1357,11 +1399,6 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.D()
                 c.L()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
 
             if first[0][0] == 2:
 
@@ -1371,11 +1408,6 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.R_r()
                 c.D_r()
                 c.D_r()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
 
         if first[0][1] == 2:
 
@@ -1384,20 +1416,11 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 # c.cube_method_mixer("DD")
                 c.D()
                 c.D()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
 
             if first[0][0] == 2:
               
                 c.D_r()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
+
 
     if first[0][2] == 0:
           
@@ -1409,11 +1432,7 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.L()
                 c.D()
                 c.L_r()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
+
 
             if first[0][0] == 2:
 
@@ -1424,11 +1443,7 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
             if first[0][0] == 0:
                 
                 c.D()
-                # c.cube_method_mixer("DrdR")
-                #c.D_r()
-                #c.R_r()
-                #c.D()
-                #c.R()
+
 
             if first[0][0] == 2:
 
@@ -1438,9 +1453,8 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.R()
 
-    #if cube_method_findcolour(c, x, y, z)[0] == [2, 0, 0]:
     first = cube_method_findcolour(c, x, y, z)
-    while cube_method_good_orient(first[2], x, y, z)==False:
+    while cube_method_good_orient(first[2], x, y, z)==False: #itt addig végzi el ezt a forgatás sorozatot amíg be nem fordul a megfelelő orientációban
         # c.cube_method_mixer("rDRDDFDf")
         c.R_r()
         c.D_r()
@@ -1450,8 +1464,11 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
     return True
 
 
-
+#hatodik fehér cubie berakása ( fehér-zöld-narancs cubie )
 def cube_method_secondcorner(c, x=5, y=3, z=6):
+    """
+            A Fehér-zöld-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     second = cube_method_findcolour(c, x, y, z)
     if second[0][2] == 2:
 
@@ -1463,10 +1480,7 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.B()
                 c.D()
                 c.B_r()
-                #c.D()
-                #c.L()
-                #c.D_r()
-                #c.L_r()
+
 
             if second[0][0] == 2:
 
@@ -1475,20 +1489,14 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.D()
                 c.D()
                 c.B()
-                #c.D()
-                #c.L()
-                #c.D_r()
-                #c.L_r()
+
 
         if second[0][1] == 2:
 
             if second[0][0] == 0:
 
                 c.D()
-                #c.D()
-                #c.L()
-                #c.D_r()
-                #c.L_r()
+
 
             if second[0][0] == 2:
 
@@ -1533,7 +1541,7 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.L_r()
 
     second = cube_method_findcolour(c, x, y, z)
-    while cube_method_good_orient(second[2], x, y, z) != True:
+    while cube_method_good_orient(second[2], x, y, z) != True: #itt addig végzi el ezt a forgatás sorozatot amíg be nem fordul a megfelelő orientációban
         # c.cube_method_mixer("lDLdlDL")
         c.L()
         c.D()
@@ -1544,6 +1552,9 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
     return True
 
 def cube_method_thirdcorner(c, x=5, y=3, z=4):
+    """
+                A Fehér-zöld-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
+    """
     third = cube_method_findcolour(c, x, y, z)
     if third[0][2] == 0:
           
@@ -2772,18 +2783,14 @@ def cube_method_seventh_step(c):
     return True
 
 
-# kellene egy olyan cube_method hogy input : ""
-# ,color,facekar
-# kell a white közép
-# kellenek a közepek
-# ezek koordinátái: minden oldalon a középső:1
-
-# az adott pozíción lesz egy string ami a cubie kódja ami ott van
-# a dictben ezzel a kóddal érjük el a cubie színeit
-
-# new idea: F-ben tudjuk a fix positiont [1][1][0] itt a cubie.l[2]==F
-# van még cubie amire ez igaz?
-# addig megy a flip xy amíg ez igaz nem lesz
 
 
-
+#([2, 0, 2], np.array([1, 3, 4])), ([2, 0, 0], np.array([1, 3, 6])),([0, 0, 0], '000', array([5, 3, 6])) , ([1, 0, 2], np.array([-1,  3,  4])), ([0, 0, 2], np.array([5, 3, 4])), ([2, 0, 1], np.array([ 1,  3, -1])), ([1, 0, 0], np.array([-1,  3,  6])), ([0, 0, 1], np.array([ 5,  3, -1]))])
+#([0, 0, 0], np.array([5, 3, 6]))
+#([2, 0, 0], np.array([1, 3, 6])),
+#([2, 0, 2], np.array([1, 3, 4])), ([0, 0, 2], np.array([5, 3, 4]))
+#([2, 1, 0], np.array([ 1, -1,  6])), ([0, 1, 2], np.array([ 5, -1,  4])),
+#([2, 1, 2], np.array([1, -1,  4]))
+#([2, 0, 0], np.array([5, 2, 6]))
+#([2, 0, 2], np.array([5, 2, 4]))
+#([0, 0, 0], np.array([1, 2, 6]))([0, 0, 2], np.array([1, 2, 4]))

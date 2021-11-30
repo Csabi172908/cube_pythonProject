@@ -1,6 +1,6 @@
 from csabi11_19algoritmus import *
 
-def white_cross(c):
+def cube_solver(c):
     white_cross_first(c)
     white_cross_second(c)
     white_cross_third(c)
@@ -20,8 +20,8 @@ def white_cross(c):
     cube_method_sixth_step(c)
     cube_method_seventh_step(c)
 
-    #c.cube_method_flipper("y")
-    #c.cube_method_flipper("y")
+    c.cube_method_flipper("y")
+    c.cube_method_flipper("y")
     c.cube_method_flipper("x")
     c.cube_method_flipper("x")
 
