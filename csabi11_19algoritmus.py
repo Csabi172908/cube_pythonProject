@@ -517,11 +517,10 @@ class Cube:
         gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
         glTranslatef(0.0,0.0, -20) # z irábyan -5 move a kamerának, hogy lássuk a kockát
         glRotatef(25, 2, 1, 0)
-
-        steps_current_pos=0 # ennek majd meg kell írni hogy ha out of range a string_of_stepsben akkor csak =None és csá, tovább megy a loop simán
+        
+        steps_current_pos=0
         while True:
-
-            if string_of_steps!=None:
+            if steps_current_pos < len(string_of_steps):
                 # kell egy léptető a nyilakkal
                 pygame.time.wait(10)
                 current_step_string=string_of_steps[steps_current_pos]
@@ -560,8 +559,8 @@ class Cube:
                 if event.type == pygame.QUIT:
                     print("quit")
                     pygame.display.quit()
-
                     pygame.quit()
+                    exit(0)
 
                 if event.type == pygame.KEYDOWN:
                     #pygame.time.Clock.tick(120)
@@ -635,7 +634,13 @@ class Cube:
             pygame.display.flip() # updates the display
             pygame.time.wait(10) # wait?
 
-        self.cube_method_3d_drawer()
+        """pygame.event.clear()
+        while True:
+            event = pygame.event.wait()
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()"""
+        #self.cube_method_3d_drawer()
         #test
 
     def cube_method_flipper(self,dir_of_flip="x"):
