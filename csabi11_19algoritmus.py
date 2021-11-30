@@ -371,7 +371,7 @@ class Cube:
                     counter+=1
 
 
-        vertices= (
+        """vertices= (
             (1, -1, -1),
             (1, 1, -1),
             (-1, 1, -1),
@@ -380,7 +380,18 @@ class Cube:
             (1, 1, 1),
             (-1, -1, 1),
             (-1, 1, 1)
-            )
+            )"""
+
+        vertices = (
+            (0.95, -0.95, -0.95),
+            (0.95, 0.95, -0.95),
+            (-0.95, 0.95, -0.95),
+            (-0.95, -0.95, -0.95),
+            (0.95, -0.95, 0.95),
+            (0.95, 0.95, 0.95),
+            (-0.95, -0.95, 0.95),
+            (-0.95, 0.95, 0.95)
+        )
 
         vertices16=tuple([tuple([vertex[0]+2,vertex[1]+2,vertex[2]-2])for vertex in vertices ])
         vertices25=tuple([tuple([vertex[0]+2,vertex[1]+2,vertex[2]])for vertex in vertices ])
@@ -494,12 +505,10 @@ class Cube:
             cnum=cnum%3
 
             for vertex in surface:
-
                 if colornumsl[cnum] in dict_of_colornum_rbg.keys():
                     glColor3fv(dict_of_colornum_rbg[colornumsl[cnum]])
                 else:
-
-                    glColor3fv((252,0,210))
+                    glColor3fv((0.0, 0.0, 0.0))
                 glVertex3fv(verticesl[vertex])
 
         glEnd()
@@ -517,7 +526,7 @@ class Cube:
         gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
         glTranslatef(0.0,0.0, -20) # z irábyan -5 move a kamerának, hogy lássuk a kockát
         glRotatef(25, 2, 1, 0)
-        
+
         steps_current_pos=0
         while True:
             if steps_current_pos < len(string_of_steps):
@@ -633,15 +642,6 @@ class Cube:
 
             pygame.display.flip() # updates the display
             pygame.time.wait(10) # wait?
-
-        """pygame.event.clear()
-        while True:
-            event = pygame.event.wait()
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()"""
-        #self.cube_method_3d_drawer()
-        #test
 
     def cube_method_flipper(self,dir_of_flip="x"):
         '''Input x vagy z szerint forgatja az egész kockát  '''
