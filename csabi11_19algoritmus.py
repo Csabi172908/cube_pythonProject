@@ -872,23 +872,29 @@ def pos_of_side_with_two_color(c,col1,col2):
 
 
 def cube_method_findcolour(c, x=-1, y=-1, z=-1):
-  l = c.cube_method_get_cubie_pos_name_color()
-  for i in range(len(l)):
-    if x == l[i][2][0] and y == l[i][2][1] and z == l[i][2][2]:
-        a = l[i]
-    if x == l[i][2][0] and y == l[i][2][2] and z == l[i][2][1]:
-        a = l[i]
-    if x == l[i][2][1] and y == l[i][2][0] and z == l[i][2][2]:
-        a = l[i]
-    if x == l[i][2][1] and y == l[i][2][2] and z == l[i][2][0]:
-        a = l[i]
-    if x == l[i][2][2] and y == l[i][2][1] and z == l[i][2][0]:
-        a = l[i]
-    if x == l[i][2][2] and y == l[i][2][0] and z == l[i][2][1]:
-        a = l[i]
-  return a 
+    """
+        Megkeresi az adott színű cubie-t
+    """
+    l = c.cube_method_get_cubie_pos_name_color()
+    for i in range(len(l)):
+        if x == l[i][2][0] and y == l[i][2][1] and z == l[i][2][2]:
+            a = l[i]
+        if x == l[i][2][0] and y == l[i][2][2] and z == l[i][2][1]:
+            a = l[i]
+        if x == l[i][2][1] and y == l[i][2][0] and z == l[i][2][2]:
+            a = l[i]
+        if x == l[i][2][1] and y == l[i][2][2] and z == l[i][2][0]:
+            a = l[i]
+        if x == l[i][2][2] and y == l[i][2][1] and z == l[i][2][0]:
+            a = l[i]
+        if x == l[i][2][2] and y == l[i][2][0] and z == l[i][2][1]:
+            a = l[i]
+    return a
 
 def cube_method_findcolourbool(sixth, x=-1, y=-1, z=-1):
+    """
+        Ellenőrzi, hogy a megfelelő színű cubie-val dolgozunk-e
+    """
     a=False
     if x == sixth[0] and y == sixth[1] and z == sixth[2]:
         a = True
@@ -906,6 +912,9 @@ def cube_method_findcolourbool(sixth, x=-1, y=-1, z=-1):
     return a
 
 def cube_method_good_orient(edge, x=-1, y=-1, z=-1):
+    """
+        Ellenőrzi az adott cubie, hogy jó orientációban van-e
+    """
 
     if edge[0] == x and edge[1] == y and edge[2] == z:
 
@@ -916,18 +925,29 @@ def cube_method_good_orient(edge, x=-1, y=-1, z=-1):
         return False
 
 def cube_method_which_colour(c, string):
+    """
+       Megadja a cubie-nk színét
+    """
     l=c.cube_method_get_cubie_pos_name_color()
     for i in range(len(l)):
       if l[i][0] == string:
         return l[i]
 
 def yellow(c):
-  l=c.cube_method_get_cubie_pos_name_color()
-  yellow=l[18]
-  if yellow[2][1]==2:
-      return True
-
+    """
+        Ellenőrzi a cubie y-koordináta szerinti színét, és ha sárga, akkor true-t küld vissza
+    """
+    l=c.cube_method_get_cubie_pos_name_color()
+    yellow=l[18]
+    if yellow[2][1]==2:
+        return True
+"""
+    A következő hat függvény ellenőrzi, hogy a megfelelő struktúra a megfelelő helyen és színen van-e
+"""
 def first_cross(c):
+    """
+        Fehér keresztet ellenőrzi a helyét
+    """
     l1 = c.cube_method_get_cubie_pos_name_color()
     fr = []
     for i in range(len(l1)):
@@ -936,8 +956,11 @@ def first_cross(c):
     for i in range(len(l1)):
         if l1[i][0][1] == 0 and l1[i][0][2]==1:
             fr.append(l1[i])
-    return fr
+    return fr #
 def first_row(c):
+    """
+        A fehér oldalt ellenőrzi
+    """
     l1 = c.cube_method_get_cubie_pos_name_color()
     fr=[]
     for i in range(len(l1)):
@@ -945,6 +968,9 @@ def first_row(c):
             fr.append(l1[i])
     return fr
 def check_first_cross(check_cube,cube):
+    """
+        Az fehér kereszt színet ellenőrzi
+    """
     fr = first_cross(cube)
     check_fr = first_cross(check_cube)
     check = True
@@ -957,6 +983,9 @@ def check_first_cross(check_cube,cube):
     else:
         return check
 def check_first_row(check_cube,cube):
+    """
+        Az fehér oldal színét ellenőrzi
+    """
     fr=first_row(cube)
     check_fr=first_row(check_cube)
     check=True
@@ -970,6 +999,9 @@ def check_first_row(check_cube,cube):
         return check
 
 def cubie_checking(c, list):
+    """
+        A listában megadott cubie-kat ellenőrzi helyét és színét
+    """
     l = c.cube_method_get_cubie_pos_name_color()
     false = []
     true = []
@@ -983,6 +1015,9 @@ def cubie_checking(c, list):
     return false
 
 def cube_check(c, d):
+    """
+        Ellenőrzi, hogy az adott állapotban levő cube ki van-e rakva
+    """
     c_list=c.cube_method_get_cubie_pos_name_color()
     d_list=d.cube_method_get_cubie_pos_name_color()
     check = True
@@ -997,6 +1032,9 @@ def cube_check(c, d):
 
 
 def cubie_checkingbool(c, list):
+    """
+        A listában megadott cubie-k színei megfelelők-e
+    """
     l = c.cube_method_get_cubie_pos_name_color()
     false = []
     true = []
@@ -1024,17 +1062,17 @@ def white_cross_first(c, x=-1, y=3, z=4):
     """
      A Fehér-kék cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    first = cube_method_findcolour(c, x, y, z)
-    if first[0][2] == 0:
+    first = cube_method_findcolour(c, x, y, z) #megkeressük hol a cubie
+    if first[0][2] == 0: # z szerint 1 héj
 
-        if first[0][1] == 0:
+        if first[0][1] == 0: # y szerint 1 héj
             # c.cube_method_mixer("UU")
             c.U()
             c.U()
 
         if first[0][1] == 1:
 
-            if first[0][0] == 0:
+            if first[0][0] == 0: # x szerinti 1 héj
                 # c.cube_method_mixer("FUU")
                 c.F()
                 c.U()
@@ -1053,11 +1091,11 @@ def white_cross_first(c, x=-1, y=3, z=4):
             c.U()
             c.U()
 
-    if first[0][2] == 1:  # z szerint 1
+    if first[0][2] == 1:  # z szerint 2
 
-        if first[0][1] == 0:  # y szerint 0
+        if first[0][1] == 0:  # y szerint 1
 
-            if first[0][0] == 0:  # x szerint 0
+            if first[0][0] == 0:  # x szerint 1
 
                 c.U()
 
@@ -1078,10 +1116,10 @@ def white_cross_first(c, x=-1, y=3, z=4):
                 c.R()
                 c.U_r()
 
-    if first[0][2] == 2:
+    if first[0][2] == 2: # z szerint 3 héj
 
         if first[0][1] == 0:
-            pass
+            pass    # ez a megfelelő pozíciója
 
         if first[0][1] == 1:
 
@@ -1114,10 +1152,10 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
     """
          A Fehér-piros cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    second = cube_method_findcolour(c, x, y, z)
-    if second[0][2] == 0:
+    second = cube_method_findcolour(c, x, y, z) #megkeressük a kis cubie-t
+    if second[0][2] == 0: #z szerint 1 héj
 
-        if second[0][1] == 0:
+        if second[0][1] == 0: # y szerint 1 héj
             # c.cube_method_mixer("FR")
             c.F()
             c.R()
@@ -1138,7 +1176,7 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
             c.F_r()
             c.R()
 
-    if second[0][2] == 1:
+    if second[0][2] == 1: # z szerint első héj
 
         if second[0][1] == 0:
 
@@ -1150,7 +1188,7 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
                 c.R()
 
             if second[0][0] == 2:
-                pass
+                pass # ez a megfelelő pozíciója
 
         if second[0][1] == 2:
 
@@ -1169,7 +1207,7 @@ def white_cross_second(c, x=1, y=3, z=-1):  # piros fehér
     if second[0][2] == 2:
 
         if second[0][1] == 0:
-            pass
+            pass #itt már helyén van az előző lépés általi kis cubie
 
         if second[0][1] == 1:
 
@@ -1210,11 +1248,11 @@ def white_cross_third(c, x=-1, y=3, z=6):
     """
         A Fehér-zöld cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    third = cube_method_findcolour(c, x, y, z)
+    third = cube_method_findcolour(c, x, y, z) #megkeressük hol a kis cubie
     if third[0][2] == 0:
 
         if third[0][1] == 0:
-            pass
+            pass # a helyén van
 
         if third[0][1] == 1:
 
@@ -1239,7 +1277,7 @@ def white_cross_third(c, x=-1, y=3, z=6):
                 c.F()
 
             if third[0][0] == 2:
-                pass
+                pass  # az előző cubie már itt van a helyén(1,3,-1)
 
         if third[0][1] == 2:
 
@@ -1258,7 +1296,7 @@ def white_cross_third(c, x=-1, y=3, z=6):
     if third[0][2] == 2:
 
         if third[0][1] == 0:
-            pass
+            pass #az előző cubie-k egyike már a helyén(-1, 3, 4)
 
         if third[0][1] == 1:
 
@@ -1304,11 +1342,11 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
     """
             A Fehér-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    fourth = cube_method_findcolour(c, x, y, z)
+    fourth = cube_method_findcolour(c, x, y, z) #megkersessük a cubie-t
     if fourth[0][2] == 0:
 
         if fourth[0][1] == 0:
-            pass
+            pass #megfelelő helyen van már egy előző cubie (-1,3,6)
 
         if fourth[0][1] == 1:
 
@@ -1334,10 +1372,10 @@ def white_cross_fourth(c, x=5, y=3, z=-1):
         if fourth[0][1] == 0:
 
             if fourth[0][0] == 0:
-                pass
+                pass #itt a megfelelő helyen van
 
             if fourth[0][0] == 2:
-                pass
+                pass #itt (1,3,-1) van a helyén
 
         if fourth[0][1] == 2:
 
@@ -1402,7 +1440,7 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
     """
         A Fehér-zöld-piros cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    first = cube_method_findcolour(c, x, y, z)
+    first = cube_method_findcolour(c, x, y, z) # megkeressük, hol van
     if first[0][2] == 2:
 
         if first[0][1] == 0:
@@ -1451,7 +1489,7 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
 
             if first[0][0] == 2:
 
-                pass
+                pass # itt lesz a megfelelő helyen
 
         if first[0][1] == 2:
 
@@ -1468,14 +1506,14 @@ def cube_method_firstcorner(c, x=1, y=3, z=6):
                 c.D()
                 c.R()
 
-    first = cube_method_findcolour(c, x, y, z)
+    first = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
     while cube_method_good_orient(first[2], x, y, z)==False: #itt addig végzi el ezt a forgatás sorozatot amíg be nem fordul a megfelelő orientációban
         # c.cube_method_mixer("rDRDDFDf")
         c.R_r()
         c.D_r()
         c.R()
         c.D()
-        first = cube_method_findcolour(c, x, y, z)
+        first = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
     return True
 
 
@@ -1484,7 +1522,7 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
     """
             A Fehér-zöld-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    second = cube_method_findcolour(c, x, y, z)
+    second = cube_method_findcolour(c, x, y, z) #itt megkeressük
     if second[0][2] == 2:
 
         if second[0][1] == 0:
@@ -1530,11 +1568,11 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
 
             if second[0][0] == 0:
 
-                pass
+                pass #itt a megfelelő helyen van
         
             if second[0][0] == 2:
 
-                pass
+                pass #(1,3,6) cubie
 
         if second[0][1] == 2:
 
@@ -1555,14 +1593,14 @@ def cube_method_secondcorner(c, x=5, y=3, z=6):
                 c.D_r()
                 c.L_r()
 
-    second = cube_method_findcolour(c, x, y, z)
+    second = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
     while cube_method_good_orient(second[2], x, y, z) != True: #itt addig végzi el ezt a forgatás sorozatot amíg be nem fordul a megfelelő orientációban
         # c.cube_method_mixer("lDLdlDL")
         c.L()
         c.D()
         c.L_r()
         c.D_r()
-        second = cube_method_findcolour(c, x, y, z)
+        second = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
 
     return True
 
@@ -1570,7 +1608,7 @@ def cube_method_thirdcorner(c, x=5, y=3, z=4):
     """
                 A Fehér-zöld-narancs cubie megkeresése majd helyre rakása, végül megfelelő orientációba rakás
     """
-    third = cube_method_findcolour(c, x, y, z)
+    third = cube_method_findcolour(c, x, y, z) #megkeressük
     if third[0][2] == 0:
           
         if third[0][1] == 0:
@@ -1640,32 +1678,35 @@ def cube_method_thirdcorner(c, x=5, y=3, z=4):
                 c.D_r()
                 c.B_r()
 
-    third = cube_method_findcolour(c, x, y, z)
+    third = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
 
-    while cube_method_good_orient(third[2], x, y, z) != True:
+    while cube_method_good_orient(third[2], x, y, z) != True: #addig csináljuk ez a forgatási sorozatot míg a megfelelő orient-ben nem lesz
         # c.cube_method_mixer("bDBdbDB")
         c.B()
         c.D()
         c.B_r()
         c.D_r()
 
-        third = cube_method_findcolour(c, x, y, z)
+        third = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
 
     return True
 
 def cube_method_fourthcorner(c, x=1, y=3, z=4):
-    fourth = cube_method_findcolour(c,x,y,z)
+    """
+        A Fehér-Piros-kék cubie helyrerakása
+    """
+    fourth = cube_method_findcolour(c,x,y,z) #megkeressük
     if fourth[0][2] == 0:
           
         if fourth[0][1] == 0:
 
             if fourth[0][0] == 0:
 
-                pass
+                pass #(5,3,6) cubie
 
             if fourth[0][0] == 2:
 
-                pass
+                pass #(1,3,6) cubie
           
         if fourth[0][1] == 2:
 
@@ -1693,11 +1734,11 @@ def cube_method_fourthcorner(c, x=1, y=3, z=4):
 
             if fourth[0][0] == 0:
 
-                pass
+                pass #itt a helyén van
               
             if fourth[0][0] == 2:
 
-                pass
+                pass #(1,3,4) cubie
 
         if fourth[0][1] == 2:
 
@@ -1716,26 +1757,29 @@ def cube_method_fourthcorner(c, x=1, y=3, z=4):
                 c.D_r()
                 c.R_r()
 
-    fourth=cube_method_findcolour(c,x,y,z)
-    while cube_method_good_orient(fourth[2], x, y, z)!=True:
+    fourth=cube_method_findcolour(c,x,y,z) #forgatások után megnézzük újra hol van és milyen orient-tel
+    while cube_method_good_orient(fourth[2], x, y, z)!=True: #addig forgatjuk amíg megfelelő orient-ben nem lesz
         # c.cube_method_mixer("BDbdBDb")
-        #print(fourth)
         c.B_r()
         c.D_r()
         c.B()
         c.D()
-        fourth = cube_method_findcolour(c, x, y, z)
+        fourth = cube_method_findcolour(c, x, y, z) #forgatások után megnézzük újra hol van és milyen orient-tel
 
     return True
 
 def cube_method_middle1(c, x=5, y=-1, z=6):
-    c.cube_method_flipper("x")
+    """
+        A Zöld-narancs cubie-helyrerakása (előtte fejrefordítottuk a kockát) (sárga felül)
+    """
+
+    c.cube_method_flipper("x") #itt forgatjuk át sárga felsőre zöld elülső oldalra
     c.cube_method_flipper("x")
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
 
 
-    first=cube_method_findcolour(c,x,y,z)
+    first=cube_method_findcolour(c,x,y,z) #megkeressük a cubie-t
 
     if first[0][1]==1:
   
@@ -1763,11 +1807,11 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.U()
                 c.F()
 
-        elif first[0][2]==2:
+        elif first[0][2]==2: # ha hátul van akkor előre fordítjuk a hátsó oldalt
 
 
             if first[0][0]==0:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #ezzel forítjuk előre
                 c.cube_method_flipper("y")
 
                 c.U()
@@ -1779,10 +1823,10 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.U()
                 c.F()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") # visszafordítjuk
                 c.cube_method_flipper("y")
             elif first[0][0]==2:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #ezzel forítjuk előre
                 c.cube_method_flipper("y")
 
                 c.U_r()
@@ -1794,10 +1838,10 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
                 c.U_r()
                 c.F_r()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") # visszafordítjuk
                 c.cube_method_flipper("y")
 
-    first = cube_method_findcolour(c, x, y, z)
+    first = cube_method_findcolour(c, x, y, z) # lelellenőrízzük a helyét is orientációját
     if first[0][1]==0:
 
         if first[0][0]==0:
@@ -1819,7 +1863,7 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
 
               c.U()
 
-    c.U()
+    c.U() # a felső sorból a helyére forgatjuk
     c.R()
     c.U_r()
     c.R_r()
@@ -1828,10 +1872,10 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
     c.U()
     c.F()
 
-    first = cube_method_findcolour(c, x, y, z)
-    if cube_method_good_orient(first[2], x, y, z)==True:
+    first = cube_method_findcolour(c, x, y, z) # ellenőrízzük a helyét és orient-tet
+    if cube_method_good_orient(first[2], x, y, z)==True: # megfelelő orientációba forgatjuk
 
-        pass
+        return True
       
     else:
         c.U()
@@ -1851,13 +1895,14 @@ def cube_method_middle1(c, x=5, y=-1, z=6):
         c.U()
         c.F()
 
-
-
-
-
+        return True
 
 def cube_method_middle2(c, x=1, y=-1, z=6):
-    second=cube_method_findcolour(c,x,y,z)
+    """
+        A Piros-zöld helyrerakása az előzző middle-ös alapján
+    """
+
+    second=cube_method_findcolour(c,x,y,z) # megkeressük
 
     if second[0][1]==1:
   
@@ -1888,7 +1933,7 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
         if second[0][2]==2:
 
             if second[0][0]==0:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") # ha hátulva előre forgatjuk
                 c.cube_method_flipper("y")
 
                 c.U()
@@ -1900,11 +1945,11 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
                 c.U()
                 c.F()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #visszaforgatjuk
                 c.cube_method_flipper("y")
 
             if second[0][0]==2:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #előreforgatjuk
                 c.cube_method_flipper("y")
 
                 c.U_r()
@@ -1916,10 +1961,10 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
                 c.U_r()
                 c.F_r()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #visszaforgatjuk
                 c.cube_method_flipper("y")
 
-    second = cube_method_findcolour(c, x, y, z)
+    second = cube_method_findcolour(c, x, y, z) #ellenőrzünk
     if second[0][1]==0:
 
         if second[0][0]==0:
@@ -1951,7 +1996,7 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
     c.F_r()
 
     second = cube_method_findcolour(c, x, y, z)
-    if cube_method_good_orient(second[2], x, y, z)==True:
+    if cube_method_good_orient(second[2], x, y, z)==True: #megfelelő orentációba forgatjuk, ha kell
 
             return True
       
@@ -1979,10 +2024,14 @@ def cube_method_middle2(c, x=1, y=-1, z=6):
         return True
 
 def cube_method_middle3(c, x=1, y=-1, z=4):
-    c.cube_method_flipper("y")
+    """
+        A piros-kék helyrerakása, először a kék oldalt előre forgatjuk
+    """
+
+    c.cube_method_flipper("y") #itt forgatjuk előre
     c.cube_method_flipper("y")
 
-    third=cube_method_findcolour(c,x,y,z)
+    third=cube_method_findcolour(c,x,y,z) # megkeressük
 
     if third[0][1]==1:
   
@@ -2013,7 +2062,7 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
         if third[0][2]==2:
 
             if third[0][0]==0:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #ha előlről htára forgatjuk
                 c.cube_method_flipper("y")
 
                 c.U()
@@ -2025,11 +2074,11 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
                 c.U()
                 c.F()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #visszaforgatjuk
                 c.cube_method_flipper("y")
 
             if third[0][0]==2:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #előre forgatjuk
                 c.cube_method_flipper("y")
 
                 c.U_r()
@@ -2041,10 +2090,10 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
                 c.U_r()
                 c.F_r()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #visszaforgatjuk
                 c.cube_method_flipper("y")
 
-    third = cube_method_findcolour(c, x, y, z)
+    third = cube_method_findcolour(c, x, y, z) #ellenőrzünk
     if third[0][1]==0:
 
         if third[0][0]==0:
@@ -2066,7 +2115,7 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
 
               c.U()
 
-    c.U()
+    c.U() #felsősorból helyére forgatjuk
     c.R()
     c.U_r()
     c.R_r()
@@ -2075,8 +2124,8 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
     c.U()
     c.F()
 
-    third = cube_method_findcolour(c, x, y, z)
-    if cube_method_good_orient(third[2], x, y, z)==True:
+    third = cube_method_findcolour(c, x, y, z) #ellenőrzünk
+    if cube_method_good_orient(third[2], x, y, z)==True: #megfelelő orientációba forgatjuk, ha kell
 
             return True
       
@@ -2103,12 +2152,15 @@ def cube_method_middle3(c, x=1, y=-1, z=4):
         return True
 
 def cube_method_middle4(c, x=5, y=-1, z=4):
+    """
+        A narancs-kék helyére forgatása
+    """
 
-      fourth=cube_method_findcolour(c,x,y,z)
+    fourth=cube_method_findcolour(c,x,y,z)#ellemőrizzük
 
-      if fourth[0][1]==1:
+    if fourth[0][1]==1:
   
-         if fourth[0][2]==0:
+        if fourth[0][2]==0:
 
             if fourth[0][0]==0:
 
@@ -2132,13 +2184,13 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U()
                 c.F()
 
-         if fourth[0][2]==2:
+        if fourth[0][2]==2:
 
-            c.cube_method_flipper("y")
-            c.cube_method_flipper("y")
+            #c.cube_method_flipper("y")
+            #c.cube_method_flipper("y")
 
             if fourth[0][0]==0:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") # ha hátul van előre forgatjuk
                 c.cube_method_flipper("y")
 
                 c.U()
@@ -2150,10 +2202,10 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U()
                 c.F()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") # visszaforgatjuk
                 c.cube_method_flipper("y")
             if fourth[0][0]==2:
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y") #előre forgatjuk
                 c.cube_method_flipper("y")
 
                 c.U_r()
@@ -2165,17 +2217,17 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U_r()
                 c.F_r()
 
-                c.cube_method_flipper("y")
+                c.cube_method_flipper("y")#hátra forgatjuk
                 c.cube_method_flipper("y")
 
-      fourth = cube_method_findcolour(c, x, y, z)
-      if fourth[0][1]==0:
+    fourth = cube_method_findcolour(c, x, y, z) #ellenőrzünk
+    if fourth[0][1]==0:
 
-          if fourth[0][0]==0:
+        if fourth[0][0]==0:
 
               c.U_r()
 
-          if fourth[0][0]==1:
+        if fourth[0][0]==1:
 
               if fourth[0][2]==1:
 
@@ -2186,48 +2238,49 @@ def cube_method_middle4(c, x=5, y=-1, z=4):
                 c.U()
                 c.U()
           
-          if fourth[0][0]==2:
+        if fourth[0][0]==2:
 
               c.U()
 
-      c.U_r()
-      c.L_r()
-      c.U()
-      c.L()
-      c.U()
-      c.F()
-      c.U_r()
-      c.F_r()
+    c.U_r()
+    c.L_r()
+    c.U()
+    c.L()
+    c.U()
+    c.F()
+    c.U_r()
+    c.F_r()
 
-      fourth = cube_method_findcolour(c, x, y, z)
-      if cube_method_good_orient(fourth[2], x, y, z)==True:
+    fourth = cube_method_findcolour(c, x, y, z) #ellenőrzünk
+    if cube_method_good_orient(fourth[2], x, y, z)==True: #helyére forgatjuk
 
             return True
       
-      else:
+    else:
+        c.U_r()
+        c.L_r()
+        c.U()
+        c.L()
+        c.U()
+        c.F()
+        c.U_r()
+        c.F_r()
+        c.U()
+        c.L_r()
+        c.U()
+        c.L()
+        c.U()
+        c.F()
+        c.U_r()
+        c.F_r()
 
-            c.U_r()
-            c.L_r()
-            c.U()
-            c.L()
-            c.U()
-            c.F()
-            c.U_r()
-            c.F_r()
-            c.U()
-            c.L_r()
-            c.U()
-            c.L()
-            c.U()
-            c.F()
-            c.U_r()
-            c.F_r()
-
-            return True
-
+        return True
 
 def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
-    upperfirstmiddle=cube_method_which_colour(c, p[0])
+    """
+        A sárga kereszt helyére rakása ennek a három cubie ellenőrzésével majd helyére rakásával
+    """
+    upperfirstmiddle=cube_method_which_colour(c, p[0]) #ezek a keresett cubiek színeit nézik
     uppersecondright=cube_method_which_colour(c, p[1])
     upperbackmiddle=cube_method_which_colour(c, p[2])
 
@@ -2236,11 +2289,9 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
         if uppersecondright[2][1]==2:
 
             if upperbackmiddle[2][1]==2:
-                print("1")
                 return True
 
             else:
-                print("2")
                 c.U()
                 c.U()
 
@@ -2263,7 +2314,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
         else:
 
             if upperbackmiddle[2][1]==2:
-                print("3")
                 c.U()
 
                 c.F()
@@ -2277,7 +2327,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 return True
          
             else:
-                print("4")
                 c.U()
 
                 c.F()
@@ -2300,7 +2349,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
         if uppersecondright[2][1]==2:
 
             if upperbackmiddle[2][1] == 2:
-                print("5")
                 c.U_r()
 
                 c.F()
@@ -2320,7 +2368,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 return True
 
             else:
-                print("6")
                 c.F()
                 c.R()
                 c.U()
@@ -2333,7 +2380,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
         else:
 
             if upperbackmiddle[2][1] == 2:
-                print("7")
                 c.F()
                 c.R()
                 c.U()
@@ -2351,7 +2397,6 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 return True
 
             else:
-                print("8")
                 c.F()
                 c.R()
                 c.U()
@@ -2359,26 +2404,27 @@ def cube_method_yellow_cross(c, p=[[1, 0, 0],[2, 0, 1], [1, 0, 2]]):
                 c.U_r()
                 c.F_r()
 
-                cube_method_yellow_cross(c)
+                cube_method_yellow_cross(c) #ha ide fut be azt jelenti, hogy a sárga keresztből csak a középső van a helyén, ezen forgatási sorozat után már lesz egy L alak, így rekurzívan meghívva a függvényt, már kirakja ( nem lesz végtelen ciklus)
 
                 return True
 
 p=['100', '201', '102']
 def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
-    #print(cubie_checking(c, [([1,1,0], np.array([-1, -1, 4]))]))
-    upperfirstmiddle=cube_method_which_colour(c, p[0])
+    """
+        A Sárga lap kék-sárga keresztben lévő cubie helyrerakása
+    """
+    upperfirstmiddle=cube_method_which_colour(c, p[0]) #ezen cubiek segítségével
     uppersecondleft=cube_method_which_colour(c, p[1])
     upperbackmiddle=cube_method_which_colour(c, p[2])
-    print(cubie_checking(c, [([0, 1, 1], np.array([5, -1, -1]))]))
     
     if upperfirstmiddle[2][2]==4:
 
-        return True
+        return True  #itt ha a helyén van
 
     else:
 
         if uppersecondleft[2][0]==4:
-            #print("ott")
+
             c.R()
             c.U()
             c.R_r()
@@ -2392,12 +2438,8 @@ def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
             return True
       
         else:
-            print(cubie_checking(c, [([0, 1, 1], np.array([5, -1, -1]))]))
             if upperbackmiddle[2][2]==4:
-                #c.cube_method_flipper("y")
-                #c.cube_method_flipper("y")
-                #c.cube_method_flipper("y")
-                #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 6]))]))
+
 
                 c.R()
                 c.U()
@@ -2417,7 +2459,6 @@ def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
                 c.cube_method_flipper("y")
                 c.cube_method_flipper("y")
                 c.cube_method_flipper("y")
-                #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 1]))]))
 
                 c.R()
                 c.U()
@@ -2436,10 +2477,8 @@ def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
                 return True
 
             else:
-                print("emitt")
-                print(cube_method_good_orient(cube_method_which_colour(c, [2, 0, 1])[2], 4, 2, -1))
 
-                if cube_method_good_orient(cube_method_which_colour(c, [2, 0, 1])[2], 4, 2, -1):
+                if cube_method_good_orient(cube_method_which_colour(c, [2, 0, 1])[2], 4, 2, -1): #itt egy gyorsító lépés
 
                     c.U()
                 else:
@@ -2464,24 +2503,24 @@ def cube_method_fifth_step1(c, p=[[1, 0, 0], [0, 0, 1],[1, 0, 2]]):
 
 p=['100', '201', '102']
 def cube_method_fifth_step2(c, p=[[1, 0, 0], [0, 0, 1]]):
+    """
+        A Sárga-narancs cubie helyérerakása
+    """
 
-    print(cubie_checking(c, [([0, 1, 1], np.array([5, -1, -1]))]))
-    c.cube_method_flipper("y")
+    c.cube_method_flipper("y") #forgatjuk, hogy a megfelelő oldal elülre kerüljön
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
 
     upperfirstmiddle = cube_method_which_colour(c, p[0])
     uppersecondleft = cube_method_which_colour(c, p[1])
-    #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 5]))]))
     
     if upperfirstmiddle[2][2]==5:
-        print("agha")
-        return True
+
+        return True #helyén van
 
     else:
 
         if uppersecondleft[2][0]==5:
-            print("ott")
             c.R()
             c.U()
             c.R_r()
@@ -2495,7 +2534,7 @@ def cube_method_fifth_step2(c, p=[[1, 0, 0], [0, 0, 1]]):
             return True
       
         else:
-            print("ittttt")
+
 
             c.cube_method_flipper("y")
 
@@ -2512,7 +2551,7 @@ def cube_method_fifth_step2(c, p=[[1, 0, 0], [0, 0, 1]]):
             c.cube_method_flipper("y")
             c.cube_method_flipper("y")
             c.cube_method_flipper("y")
-            # print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 1]))]))
+
             c.R()
             c.U()
             c.R_r()
@@ -2528,16 +2567,17 @@ def cube_method_fifth_step2(c, p=[[1, 0, 0], [0, 0, 1]]):
 
 
             return True
-    c.cube_method_flipper("y")
+    c.cube_method_flipper("y") #visszaforgatás kezdő pozícióba
 
 def cube_method_fifth_step3(c, string1=[1, 0, 0]):
-    upperfirstmiddle=cube_method_which_colour(c, string1)
-    #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 5]))]))
+    """
+        A zöld-sárga cubie helyére forgatása
+    """
+    c.cube_method_flipper("y") #megfelelő oldalt elülre forgatjuk
     c.cube_method_flipper("y")
     c.cube_method_flipper("y")
-    c.cube_method_flipper("y")
-    upperfirstmiddle = cube_method_which_colour(c, string1)
-    #print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 6]))]))
+    upperfirstmiddle = cube_method_which_colour(c, string1) #ezen cubie segítségével
+
     
     if upperfirstmiddle[2][2]==6:
 
@@ -2558,10 +2598,16 @@ def cube_method_fifth_step3(c, string1=[1, 0, 0]):
 
 
 
-
+"""
+    A Sárga kereszt kész úgy, hogy az oldalsó színek is a helyén vannak
+"""
 
 dict_of_color_num={"R":1, "Y":2,"W":3, "B":4, "O":5, "G":6}
 def cube_method_sixth_step(c):
+    """
+        Sárga sarok cubie-k helyükre tevése, de még az orentáció nem biztos, hogy helyes
+    """
+    #minden alkalommal amikor cube_method_get_cubie_pos_name_color-t használjuk akkor lekérdezzük ezen cubiek adatait [2,0,0], [0, 0, 0]
 
     l0=c.cube_method_get_cubie_pos_name_color()
     sixth1=l0[18][2]
@@ -2570,8 +2616,8 @@ def cube_method_sixth_step(c):
     if cube_method_findcolourbool(sixth1, 5, 2, 6):
 
         if cube_method_findcolourbool(sixth2, 1, 2,  6):
-            print("jó")
-            return True
+
+            return True #mind a négy jó helyen van mivel ha kettő jo helyen van akkor az összes
     
         else:
 
@@ -2591,7 +2637,7 @@ def cube_method_sixth_step(c):
                 return True
 
             else:
-                print("22222")
+                # mind a négy jó helyen van mivel ha kettő jo helyen van akkor az összes
                 c.U()
                 c.R()
                 c.U_r()
@@ -2617,10 +2663,8 @@ def cube_method_sixth_step(c):
     else:
 
         end=False
-        print(len(cubie_checkingbool(c, [([2, 0, 0], np.array([5, 2, 6])), ([2, 0, 2], np.array([5, 2, 4])),
-                                   ([0, 0, 0], np.array([1, 2, 6])),
-                                   ([0, 0, 2], np.array([1, 2, 4]))])))
-        while end==False:
+
+        while end==False: # ez azért while ciklus, mivel lehet, hogy nem lesz mind a helyén így meg le kell futattni az
             c.cube_method_flipper("y")
             l2=c.cube_method_get_cubie_pos_name_color()
             sixth4=l2[18][2]
@@ -2629,12 +2673,11 @@ def cube_method_sixth_step(c):
             if cube_method_findcolourbool(sixth4, 4, 2,  5):
 
                 if cube_method_findcolourbool(sixth5, 6, 2,  5):
-                    print("333333")
+
                     c.cube_method_flipper("y")
                     c.cube_method_flipper("y")
                     c.cube_method_flipper("y")
-                    print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 6]))]))
-                    #c.cube_method_3d_drawer()
+
                     end=True
 
                 else:
@@ -2652,7 +2695,7 @@ def cube_method_sixth_step(c):
                     sixth6=l3[0][2]
 
                     if cube_method_findcolourbool(sixth6, 5, 2,  6):
-                        print("444444444")
+
                         c.cube_method_flipper("y")
                         c.cube_method_flipper("y")
                         c.cube_method_flipper("y")
@@ -2674,20 +2717,20 @@ def cube_method_sixth_step(c):
                         c.cube_method_flipper("y")
                         c.cube_method_flipper("y")
 
-                        cube_method_sixth_step(c)
+                        cube_method_sixth_step(c) #itt újra meg kell hívni mivel, azon cubie-k helyét is meg kell nézni, amelyeket az else ág előtt kezeltünk, de nem romlik az állapot így nem lesz végtelen ciklus
 
             else:
-                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 5]))]))
+
                 c.cube_method_flipper("y")
                 l4=c.cube_method_get_cubie_pos_name_color()
                 sixth7=l4[18][2]
                 sixth8=l4[0][2]
-                print(cubie_checking(c, [([1, 1, 0], np.array([-1, -1, 4]))]))
+
          
                 if cube_method_findcolourbool(sixth7, 1, 2,  4):
          
                     if cube_method_findcolourbool(sixth8, 5, 2,  4):
-                        print("66666")
+
                         c.cube_method_flipper("y")
                         c.cube_method_flipper("y")
 
@@ -2708,14 +2751,14 @@ def cube_method_sixth_step(c):
                         sixth9=l5[0][2]
 
                         if cube_method_findcolourbool(sixth9, 5, 2,  4):
-                            print("77777")
+
                             c.cube_method_flipper("y")
                             c.cube_method_flipper("y")
 
                             end=True
 
                         else:
-                            print("888888")
+
                             c.U()
                             c.R()
                             c.U_r()
@@ -2728,7 +2771,7 @@ def cube_method_sixth_step(c):
                             c.cube_method_flipper("y")
                             c.cube_method_flipper("y")
 
-                            cube_method_sixth_step(c)
+                            cube_method_sixth_step(c) #itt újra meg kell hívni mivel, azon cubie-k helyét is meg kell nézni, amelyeket az else ág előtt kezeltünk, de nem romlik az állapot így nem lesz végtelen ciklus
 
 
                 else:
@@ -2738,8 +2781,7 @@ def cube_method_sixth_step(c):
                     sixth10=l6[18][2]
 
                     if cube_method_findcolourbool(sixth10, 4, 2,  1):
-                        print("KILENC")
-                        #c.cube_method_3d_drawer()
+
                         c.U()
                         c.R()
                         c.U_r()
@@ -2751,7 +2793,7 @@ def cube_method_sixth_step(c):
 
                         c.cube_method_flipper("y")
 
-                        cube_method_sixth_step(c)
+                        cube_method_sixth_step(c) #itt újra meg kell hívni mivel, azon cubie-k helyét is meg kell nézni, amelyeket az else ág előtt kezeltünk, de nem romlik az állapot így nem lesz végtelen ciklus
 
 
                     else:
@@ -2764,38 +2806,34 @@ def cube_method_sixth_step(c):
                         c.U_r()
                         c.L()
 
-                        c.cube_method_flipper("y")
+                        c.cube_method_flipper("y") #ezen végső forgatással egy helyére kerül, de újra kell ellenőrizni, hogy végül mind a neégy helyére kerüljön
 
-
-
-
-            print(len(cubie_checkingbool(c, [([2, 0, 0], np.array([5, 2, 6])), ([2, 0, 2], np.array([5, 2, 4])),
-                                       ([0, 0, 0], np.array([1, 2, 6])),
-                                       ([0, 0, 2], np.array([1, 2, 4]))])))
-
-
-
-
+    return end
 
 def cube_method_seventh_step(c):
-  counter=0
-  while counter<=4:
-    if yellow(c):
+    """
+        A Sárga sarok kockák megfelelő orientációba tevése
+
+    """
+
+    counter=0
+    while counter<=4: #azért while, hogy addig csinálja míg mind a négy helyére nem kerül
+        if yellow(c):
       
-      counter+=1
-      c.U()
+            counter+=1
+            c.U()
 
-    else:
+        else:
 
-      c.R_r()
-      c.D_r()
-      c.R()
-      c.D()
+            c.R_r()
+            c.D_r()
+            c.R()
+            c.D()
 
-  c.U_r()
+    c.U_r()
 
-  if counter==4:
-    return True
+    if counter==4:
+        return True
 
 
 
