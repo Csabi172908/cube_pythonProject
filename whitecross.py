@@ -1,4 +1,4 @@
-from csabi11_19algoritmus import *
+from algoritmus import *
 
 def cube_solver(c):
     white_cross_first(c)
